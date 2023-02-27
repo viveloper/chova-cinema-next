@@ -8,5 +8,5 @@ const buildEslintCommand = (filenames) =>
 const buildPrettierCommand = (filenames) => `yarn prettier --write .`;
 
 module.exports = {
-  '*.{js,jsx,ts,tsx}': [buildPrettierCommand, buildPrettierCommand],
+  '*.{js,jsx,ts,tsx}': [buildEslintCommand, buildPrettierCommand],
 };
