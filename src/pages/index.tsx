@@ -4,6 +4,7 @@ import Layout from '@/components/Layout';
 import MovieCardList from '@/components/MovieCardList';
 import { MovieCardItem } from '@/components/MovieCardList/MovieCard/types';
 import Head from 'next/head';
+import { useEffect } from 'react';
 
 export default function Home() {
   const carouselItems: CarouselItem[] = [
