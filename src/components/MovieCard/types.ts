@@ -1,4 +1,4 @@
-export type CardMovie = {
+export type MovieCardItem = {
   RepresentationMovieCode: string;
   MoviePlayYN: string;
   MoviePlayEndYN: number;

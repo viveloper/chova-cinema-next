@@ -4,12 +4,13 @@ import useLayerMovieTrailer from '@/hooks/useLayerMovieTrailer';
 import LayerMovieTrailer from '../LayerMovieTrailer';
 import { Theme } from '../types';
 import classes from './Carousel.module.css';
+import { CarouselItem } from './types';
 
 interface Props {
   theme: Theme;
   height: number;
   width: number;
-  items: Array<any>;
+  items: Array<CarouselItem>;
 }
 
 const Carousel = ({ theme, height, width, items }: Props) => {

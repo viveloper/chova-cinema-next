@@ -3,10 +3,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import classes from './MovieCard.module.css';
 import { Theme } from '../types';
-import { CardMovie } from './types';
+import { MovieCardItem } from './types';
 
 interface Props {
-  movie: CardMovie;
+  movie: MovieCardItem;
   number: number;
   theme: Theme;
 }
