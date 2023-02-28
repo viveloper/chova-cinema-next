@@ -57,7 +57,7 @@ const Carousel = ({ theme = 'light', height, width, items }: Props) => {
                     height: height ?? 'auto',
                   }}
                 >
-                  <Image src={item.img} alt="poster" fill />
+                  <Image src={item.img} alt="poster" fill priority />
                 </div>
               </a>
             </li>

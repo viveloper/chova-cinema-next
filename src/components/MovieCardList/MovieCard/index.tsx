@@ -15,7 +15,7 @@ const MovieCard = ({ movie, number, theme }: Props) => {
   return (
     <div className={`${classes.card} ${theme === 'light' ? classes.light : ''}`}>
       <div className={classes.imgContainer}>
-        <Image src={movie.PosterURL} alt="poster" fill />
+        <Image src={movie.PosterURL} alt="poster" fill sizes="184px" />
         <em className={classes.index}>{number}</em>
         <div className={classes.hoverLayer}>
           <Link href="/ticketing">예매하기</Link>
