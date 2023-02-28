@@ -2,8 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import classes from './MovieCard.module.css';
-import { Theme } from '../types';
 import { MovieCardItem } from './types';
+import { Theme } from '@/components/types';
 
 interface Props {
   movie: MovieCardItem;
