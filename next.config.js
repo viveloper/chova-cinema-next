@@ -5,9 +5,9 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'jherr-pokemon.s3.us-west-1.amazonaws.com',
+        hostname: 'chova-cinema.s3.ap-northeast-2.amazonaws.com',
         port: '',
-        pathname: '/images/**',
+        pathname: '',
       },
     ],
   },

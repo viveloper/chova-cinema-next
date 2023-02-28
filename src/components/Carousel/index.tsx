@@ -1,5 +1,6 @@
-import useLayerMovieTrailer from '@/hooks/useLayerMovieTrailer';
+import Image from 'next/image';
 import { useEffect, useState, MouseEvent } from 'react';
+import useLayerMovieTrailer from '@/hooks/useLayerMovieTrailer';
 import LayerMovieTrailer from '../LayerMovieTrailer';
 import { Theme } from '../types';
 import classes from './Carousel.module.css';
@@ -55,7 +56,8 @@ const Carousel = ({ theme, height, width, items }: Props) => {
                     height: height ?? 'auto',
                   }}
                 >
-                  <img src={item.img} alt="poster" height={height} />
+                  {/* <img src={item.img} alt="poster" height={height} /> */}
+                  <Image src={item.img} alt="poster" height={height} width={0} />
                 </div>
               </a>
             </li>
