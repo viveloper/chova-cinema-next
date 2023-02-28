@@ -11,18 +11,16 @@ export default {
 
 const Template: ComponentStory<typeof Layout> = (args) => (
   <Layout {...args}>
-    <div>
-      <div
-        className="center"
-        style={{
-          height: '200px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <h1>Content</h1>
-      </div>
+    <div
+      className="center"
+      style={{
+        height: '200px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <h1>Content</h1>
     </div>
   </Layout>
 );

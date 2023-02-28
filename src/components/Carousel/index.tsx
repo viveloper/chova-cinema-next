@@ -7,13 +7,13 @@ import classes from './Carousel.module.css';
 import { CarouselItem } from './types';
 
 interface Props {
-  theme: Theme;
-  height: number;
-  width: number;
+  theme?: Theme;
+  height?: number;
+  width?: number;
   items: Array<CarouselItem>;
 }
 
-const Carousel = ({ theme, height, width, items }: Props) => {
+const Carousel = ({ theme = 'light', height, width, items }: Props) => {
   const [activeItem, setActiveItem] = useState(0);
 
   useEffect(() => {
@@ -57,8 +57,7 @@ const Carousel = ({ theme, height, width, items }: Props) => {
                     height: height ?? 'auto',
                   }}
                 >
-                  {/* <img src={item.img} alt="poster" height={height} /> */}
-                  <Image src={item.img} alt="poster" height={height} width={0} />
+                  <Image src={item.img} alt="poster" fill />
                 </div>
               </a>
             </li>

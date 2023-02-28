@@ -7,7 +7,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'chova-cinema.s3.ap-northeast-2.amazonaws.com',
         port: '',
-        pathname: '',
+        pathname: '/**',
       },
     ],
   },

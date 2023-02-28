@@ -15,14 +15,7 @@ const MovieCard = ({ movie, number, theme }: Props) => {
   return (
     <div className={`${classes.card} ${theme === 'light' ? classes.light : ''}`}>
       <div className={classes.imgContainer}>
-        {/* <img src={movie.PosterURL} alt="poster" /> */}
-        <Image
-          src={movie.PosterURL}
-          alt="poster"
-          height={263}
-          width={0}
-          style={{ objectFit: 'cover' }}
-        />
+        <Image src={movie.PosterURL} alt="poster" fill />
         <em className={classes.index}>{number}</em>
         <div className={classes.hoverLayer}>
           <Link href="/ticketing">예매하기</Link>

@@ -1,9 +1,10 @@
 .card {
-  width: 184px;
 }
 
 .card .imgContainer {
   position: relative;
+  width: 184px;
+  height: 263px;
 }
 
 .card img {
