@@ -1,12 +1,12 @@
+import { Movie } from '@/types/movie';
 import React, { useState } from 'react';
 import { Theme } from '../types';
 import MovieCard from './MovieCard';
-import { MovieCardItem } from './MovieCard/types';
 import classes from './MovieCardList.module.css';
 
 interface Props {
   theme: Theme;
-  movies: MovieCardItem[];
+  movies: Movie[];
   showNum: number;
 }
 
@@ -50,13 +50,11 @@ const MovieCardList = ({ theme, movies, showNum }: Props) => {
           className={classes.movies}
           style={{ transform: `translateX(${startActiveIndex * -199}px)` }}
         >
-          {movies.map((movie, index) => {
-            return (
-              <li key={movie.RepresentationMovieCode} className={classes.movie}>
-                <MovieCard movie={movie} number={index + 1} theme={theme} />
-              </li>
-            );
-          })}
+          {movies.map((movie, index) => (
+            <li key={movie.RepresentationMovieCode} className={classes.movie}>
+              <MovieCard movie={movie} number={index + 1} theme={theme} />
+            </li>
+          ))}
         </ul>
       </div>
     </div>

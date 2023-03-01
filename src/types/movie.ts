@@ -1,6 +1,6 @@
-export type MovieCardItem = {
+export type Movie = {
   RepresentationMovieCode: string;
-  MoviePlayYN: string;
+  MoviePlayYN: string | null;
   MoviePlayEndYN: number;
   MovieNameKR: string | null;
   MovieNameUS: string | null;
@@ -11,12 +11,12 @@ export type MovieCardItem = {
   ViewGradeNameUS: string | null;
   ViewGradeName: any;
   BookingRate: number;
-  ReleaseDate: string;
-  DDay: string;
+  ReleaseDate: string | null;
+  DDay: string | null;
   ExpectEvaluation: number;
   ViewEvaluation: number;
   Evaluation: number;
-  BookingYN: string;
+  BookingYN: string | null;
   ViewRate: number;
   SpecialScreenDivisionCode: string[] | null;
   SoloOpenYN: any;
@@ -62,10 +62,54 @@ export type MovieCardItem = {
   UpdateYn: string | null;
   ArrayStandardCd: string | null;
   UpdateDt: string | null;
-  LikeYN: string;
+  LikeYN: string | null;
   PlayTime: number;
   ViewCount: number;
   LikeCount: number;
   TargetMovieListCode: number;
   ViewCountSortSequence: number;
+};
+
+export type Movies = {
+  Movies: {
+    Items: Array<{
+      Items: Movie[];
+      ItemCount: number;
+      KeywordID: string;
+      KeywordNm: string;
+      UpdateYn: string;
+      MoreLookCD: string;
+      MoreLookUrl: string;
+      MoreLookImgUrl: string;
+      MoreLookImgAlt: string;
+      ArrayStandardCd: string;
+      UpdateDt: string;
+      TargetMovieListCode: number;
+    }>;
+  };
+  IsOK: string;
+  ResultMessage: string;
+  ResultCode: any;
+  EventResultYn: any;
+};
+
+export type SpecialMovies = {
+  Movies: {
+    Items: Movie[];
+    ItemCount: number;
+    KeywordID: string;
+    KeywordNm: string;
+    UpdateYn: string;
+    MoreLookCD: string;
+    MoreLookUrl: string;
+    MoreLookImgUrl: string;
+    MoreLookImgAlt: string;
+    ArrayStandardCd: string;
+    UpdateDt: string;
+    TargetMovieListCode: number;
+  };
+  IsOK: string;
+  ResultMessage: string;
+  ResultCode: any;
+  EventResultYn: any;
 };
