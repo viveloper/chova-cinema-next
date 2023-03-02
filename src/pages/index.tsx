@@ -1,26 +1,11 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import axios from 'axios';
 import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
 import Carousel from '@/components/Carousel';
 import Layout from '@/components/Layout';
 import MovieCardList from '@/components/MovieCardList';
-import { CarouselItem } from '@/types/carousel';
-import { Movie } from '@/types/movie';
-
-const getCarousel = async () => {
-  const res = await axios.get<CarouselItem[]>(`${process.env.NEXT_PUBLIC_HOST}/api/carousel`, {
-    params: { use: 'home' },
-  });
-  return res.data;
-};
-
-const getMovies = async () => {
-  const res = await axios.get<Movie[]>(`${process.env.NEXT_PUBLIC_HOST}/api/movies`, {
-    params: { limit: 21 },
-  });
-  return res.data;
-};
+import getCarousel from '@/query/carousel';
+import getMovies from '@/query/movie';
 
 export const getServerSideProps: GetServerSideProps<{
   dehydratedState: DehydratedState;
@@ -34,7 +19,7 @@ export const getServerSideProps: GetServerSideProps<{
     }),
     queryClient.prefetchQuery({
       queryKey: ['movies', { limit: 21 }],
-      queryFn: getMovies,
+      queryFn: () => getMovies({ limit: 21 }),
     }),
   ]);
 
@@ -54,7 +39,7 @@ export default function Home() {
 
   const { data: movies } = useQuery({
     queryKey: ['movies', { limit: 21 }],
-    queryFn: getMovies,
+    queryFn: () => getMovies({ limit: 21 }),
   });
 
   // TODO: 로딩 및 에러 처리 고도화
