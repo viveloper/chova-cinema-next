@@ -23,8 +23,7 @@ Primary.args = {
     MovieNameKR: '원 데이',
     MovieNameUS: '원 데이',
     MovieName: null,
-    PosterURL:
-      'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16119_101_1.jpg',
+    PosterURL: '/Media/MovieFile/MovieImg/202007/16119_101_1.jpg',
     ViewGradeCode: 15,
     ViewGradeNameKR: '15',
     ViewGradeNameUS: '15세이상관람가',

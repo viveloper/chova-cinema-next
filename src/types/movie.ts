@@ -97,15 +97,15 @@ export type SpecialMovies = {
   Movies: {
     Items: Movie[];
     ItemCount: number;
-    KeywordID: string;
-    KeywordNm: string;
-    UpdateYn: string;
-    MoreLookCD: string;
-    MoreLookUrl: string;
-    MoreLookImgUrl: string;
-    MoreLookImgAlt: string;
-    ArrayStandardCd: string;
-    UpdateDt: string;
+    KeywordID: string | null;
+    KeywordNm: string | null;
+    UpdateYn: string | null;
+    MoreLookCD: string | null;
+    MoreLookUrl: string | null;
+    MoreLookImgUrl: string | null;
+    MoreLookImgAlt: string | null;
+    ArrayStandardCd: string | null;
+    UpdateDt: string | null;
     TargetMovieListCode: number;
   };
   IsOK: string;

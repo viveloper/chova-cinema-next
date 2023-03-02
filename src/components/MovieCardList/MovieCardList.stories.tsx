@@ -24,8 +24,7 @@ Primary.args = {
       MovieNameKR: '반도',
       MovieNameUS: '반도',
       MovieName: null,
-      PosterURL:
-        'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_101_1.jpg',
+      PosterURL: '/Media/MovieFile/MovieImg/202007/16010_101_1.jpg',
       ViewGradeCode: 15,
       ViewGradeNameKR: '15',
       ViewGradeNameUS: '15세이상관람가',
@@ -107,8 +106,7 @@ Primary.args = {
       MovieNameKR: '＃살아있다',
       MovieNameUS: '＃살아있다',
       MovieName: null,
-      PosterURL:
-        'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202006/15965_101_1.jpg',
+      PosterURL: '/Media/MovieFile/MovieImg/202006/15965_101_1.jpg',
       ViewGradeCode: 15,
       ViewGradeNameKR: '15',
       ViewGradeNameUS: '15세이상관람가',
@@ -179,8 +177,7 @@ Primary.args = {
       MovieNameKR: '아이 캔 온리 이매진',
       MovieNameUS: '아이 캔 온리 이매진',
       MovieName: null,
-      PosterURL:
-        'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202006/15906_101_1.jpg',
+      PosterURL: '/Media/MovieFile/MovieImg/202006/15906_101_1.jpg',
       ViewGradeCode: 12,
       ViewGradeNameKR: '12',
       ViewGradeNameUS: '12세이상관람가',
@@ -251,8 +248,7 @@ Primary.args = {
       MovieNameKR: '밤쉘: 세상을 바꾼 폭탄선언',
       MovieNameUS: '밤쉘: 세상을 바꾼 폭탄선언',
       MovieName: null,
-      PosterURL:
-        'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202005/15630_101_1.jpg',
+      PosterURL: '/Media/MovieFile/MovieImg/202005/15630_101_1.jpg',
       ViewGradeCode: 15,
       ViewGradeNameKR: '15',
       ViewGradeNameUS: '15세이상관람가',
@@ -323,8 +319,7 @@ Primary.args = {
       MovieNameKR: '원 데이',
       MovieNameUS: '원 데이',
       MovieName: null,
-      PosterURL:
-        'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16119_101_1.jpg',
+      PosterURL: '/Media/MovieFile/MovieImg/202007/16119_101_1.jpg',
       ViewGradeCode: 15,
       ViewGradeNameKR: '15',
       ViewGradeNameUS: '15세이상관람가',

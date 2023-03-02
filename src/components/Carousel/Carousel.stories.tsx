@@ -18,21 +18,18 @@ Primary.args = {
   height: 774,
   items: [
     {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/CarouselMedia/OneDay_1920774.jpg',
-      video:
-        'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/CarouselMedia/OneDay_1280720.mp4',
+      img: '/CarouselMedia/OneDay_1920774.jpg',
+      video: '/CarouselMedia/OneDay_1280720.mp4',
       use: 'home',
     },
     {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/CarouselMedia/SteelRain_1920774.jpg',
-      video:
-        'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/CarouselMedia/SteelRain_1280720.mp4',
+      img: '/CarouselMedia/SteelRain_1920774.jpg',
+      video: '/CarouselMedia/SteelRain_1280720.mp4',
       use: 'home',
     },
     {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/CarouselMedia/Peninsula_1920774.jpg',
-      video:
-        'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/CarouselMedia/Peninsula_1280720.mp4',
+      img: '/CarouselMedia/Peninsula_1920774.jpg',
+      video: '/CarouselMedia/Peninsula_1280720.mp4',
       use: 'home',
     },
   ],
