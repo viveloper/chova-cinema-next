@@ -1,32 +1,63 @@
+import { GetServerSideProps } from 'next';
+import Head from 'next/head';
+import axios from 'axios';
+import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
 import Carousel from '@/components/Carousel';
 import Layout from '@/components/Layout';
 import MovieCardList from '@/components/MovieCardList';
 import { CarouselItem } from '@/types/carousel';
 import { Movie } from '@/types/movie';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import Head from 'next/head';
+
+const getCarousel = async () => {
+  const res = await axios.get<CarouselItem[]>(`${process.env.NEXT_PUBLIC_HOST}/api/carousel`, {
+    params: { use: 'home' },
+  });
+  return res.data;
+};
+
+const getMovies = async () => {
+  const res = await axios.get<Movie[]>(`${process.env.NEXT_PUBLIC_HOST}/api/movies`, {
+    params: { limit: 21 },
+  });
+  return res.data;
+};
+
+export const getServerSideProps: GetServerSideProps<{
+  dehydratedState: DehydratedState;
+}> = async () => {
+  const queryClient = new QueryClient();
+
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: ['carousel', { use: 'home' }],
+      queryFn: getCarousel,
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ['movies', { limit: 21 }],
+      queryFn: getMovies,
+    }),
+  ]);
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
 
 export default function Home() {
   // TODO: API 호출 에러 처리 공통화
-  const { data: carouselItems, isSuccess: isCaroucelSuccess } = useQuery({
+  const { data: carouselItems } = useQuery({
     queryKey: ['carousel', { use: 'home' }],
-    queryFn: async () => {
-      const res = await axios.get<CarouselItem[]>('/api/carousel', { params: { use: 'home' } });
-      return res.data;
-    },
+    queryFn: getCarousel,
   });
 
-  const { data: movies, isSuccess: isMoviesSuccess } = useQuery({
+  const { data: movies } = useQuery({
     queryKey: ['movies', { limit: 21 }],
-    queryFn: async () => {
-      const res = await axios.get<Movie[]>('/api/movies', { params: { limit: 21 } });
-      return res.data;
-    },
+    queryFn: getMovies,
   });
 
   // TODO: 로딩 및 에러 처리 고도화
-  if (!isCaroucelSuccess || !isMoviesSuccess) return <></>;
 
   return (
     <>
@@ -37,10 +68,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout theme="dark">
-        <Carousel theme="dark" height={774} items={carouselItems} />
+        <Carousel theme="dark" height={774} items={carouselItems ?? []} />
         <section style={{ backgroundColor: '#000', padding: '32px 0' }}>
           <div className="center">
-            <MovieCardList theme="dark" movies={movies} showNum={5} />
+            <MovieCardList theme="dark" movies={movies ?? []} showNum={5} />
           </div>
         </section>
       </Layout>

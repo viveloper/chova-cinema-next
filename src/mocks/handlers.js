@@ -5,10 +5,10 @@ import { MOVIES_HOME } from './data/movie';
 
 export const handlers = [
   rest.get(`/api/carousel`, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(CAROUSEL_ITEMS));
+    return res(ctx.status(200), ctx.json(CAROUSEL_ITEMS), ctx.delay(1000));
   }),
 
   rest.get(`/api/movies`, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(MOVIES_HOME));
+    return res(ctx.status(200), ctx.json(MOVIES_HOME), ctx.delay(1000));
   }),
 ];

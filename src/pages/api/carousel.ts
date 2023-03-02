@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { CarouselItem } from '@/types/carousel';
+import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { CarouselItem } from '@/types/carousel';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<CarouselItem[]>) {
   const { data } = await axios.get<CarouselItem[]>(

@@ -15,3 +15,18 @@
 ## 기술 스택 변경
 
 - Next.js, TypeScript, Recoil, TanStack Query(React Query), Emotion, Storybook, MSW
+
+## 실행
+
+```
+yarn install
+yarn dev
+```
+
+## 도커 빌드, 실행
+
+```
+Docker Desktop 설치
+docker build -t chova-cinema-next .
+docker run -p 3000:3000 chova-cinema-next
+```

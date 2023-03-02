@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { Movie, SpecialMovies } from '@/types/movie';
+import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { Movie, SpecialMovies } from '@/types/movie';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Movie[]>) {
   const { data } = await axios.get<SpecialMovies>(

@@ -1,7 +1,7 @@
-import '@/styles/globals.css';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import type { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
+import { AppProps } from 'next/app';
+import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import '@/styles/globals.css';
 
 const isMSWEnabled =
   process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_API_MOCKING_ENABLED === 'true';
@@ -22,15 +22,13 @@ const initMocks = async () => {
 
 initMocks();
 
-const queryClient = new QueryClient();
-
 export default function App({ Component, pageProps }: AppProps) {
+  const [queryClient] = useState(() => new QueryClient());
   const [ready, setReady] = useState(!isMSWEnabled);
 
   useEffect(() => {
     if (!isMSWEnabled) return;
     const timer = setInterval(() => {
-      console.log('timer');
       if (isMSWReady) {
         setReady(true);
         clearInterval(timer);
@@ -42,7 +40,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Component {...pageProps} />
+      <Hydrate state={pageProps.dehydratedState}>
+        <Component {...pageProps} />
+      </Hydrate>
     </QueryClientProvider>
   );
 }
