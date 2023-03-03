@@ -5,8 +5,6 @@ import classes from './MovieCard.module.css';
 import { Theme } from '@/components/types';
 import { Movie } from '@/types/movie';
 
-const BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
-
 interface Props {
   movie: Movie;
   number: number;
@@ -19,8 +17,7 @@ const MovieCard = ({ movie, number, theme }: Props) => {
   return (
     <div className={`${classes.card} ${theme === 'light' ? classes.light : ''}`}>
       <div className={classes.imgContainer}>
-        {/* TODO: 퓨어 컴포넌트로 만들기 위해 BASE_URL 의존성 제거 */}
-        <Image src={BASE_URL + movie.PosterURL} alt="poster" fill sizes="184px" />
+        <Image src={movie.PosterURL} alt="poster" fill sizes="184px" />
         <em className={classes.index}>{number}</em>
         <div className={classes.hoverLayer}>
           {/* TODO: 재사용성을 위해 이벤트 핸들러를 props로 전달 */}

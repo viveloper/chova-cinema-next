@@ -6,8 +6,6 @@ import { Theme } from '../types';
 import classes from './Carousel.module.css';
 import { CarouselItem } from '@/types/carousel';
 
-const BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
-
 interface Props {
   theme?: Theme;
   height?: number;
@@ -40,7 +38,7 @@ const Carousel = ({ theme = 'light', height, width, items }: Props) => {
 
   const handleImgClick = (e: MouseEvent<HTMLAnchorElement>, index: number) => {
     e.preventDefault();
-    handlePlay(BASE_URL + items[index].video);
+    handlePlay(items[index].video);
   };
 
   const { src, isActive, handlePlay, handleClose } = useLayerMovieTrailer();
@@ -59,7 +57,7 @@ const Carousel = ({ theme = 'light', height, width, items }: Props) => {
                     height: height ?? 'auto',
                   }}
                 >
-                  <Image src={BASE_URL + item.img} alt="poster" fill priority />
+                  <Image src={item.img} alt="poster" fill priority />
                 </div>
               </a>
             </li>

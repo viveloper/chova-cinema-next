@@ -12,6 +12,18 @@ const nextConfig = {
     ],
   },
   output: 'standalone',
+  async rewrites() {
+    return [
+      {
+        source: '/Media/:path*',
+        destination: `${process.env.NEXT_PUBLIC_S3_BASE_URL}/Media/:path*`,
+      },
+      {
+        source: '/CarouselMedia/:path*',
+        destination: `${process.env.NEXT_PUBLIC_S3_BASE_URL}/CarouselMedia/:path*`,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

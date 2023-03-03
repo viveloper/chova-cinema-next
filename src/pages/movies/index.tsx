@@ -1,6 +1,7 @@
 import Layout from '@/components/Layout';
 import Head from 'next/head';
 
+// TODO: SSR
 export default function Movies() {
   return (
     <>

@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout';
 import Head from 'next/head';
 
-// TODO: 상세화면은 Static Site Generation 활용
+// TODO: step1 SSR, step2 SSG
 export default function MovieDetail() {
   return (
     <>
