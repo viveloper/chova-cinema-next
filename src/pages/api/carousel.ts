@@ -3,7 +3,14 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 import { CarouselItem } from '@/types/carousel';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<CarouselItem[]>) {
+type ErrorResponse = {
+  message: string;
+};
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<CarouselItem[] | ErrorResponse>,
+) {
   const { data } = await axios.get<CarouselItem[]>(
     `${process.env.NEXT_PUBLIC_S3_BASE_URL}/data/home/carouseItems.json`,
   );

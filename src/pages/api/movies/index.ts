@@ -3,7 +3,14 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 import { Movie, Movies } from '@/types/movie';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Movie[]>) {
+type ErrorResponse = {
+  message: string;
+};
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Movie[] | ErrorResponse>,
+) {
   const { data } = await axios.get<Movies>(
     `${process.env.NEXT_PUBLIC_S3_BASE_URL}/data/home/movies.json`,
   );

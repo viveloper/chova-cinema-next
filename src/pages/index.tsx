@@ -34,7 +34,6 @@ export const getServerSideProps: GetServerSideProps<{
 export default function Home() {
   const { push } = useRouter();
 
-  // TODO: API 호출 에러 처리 공통화
   const { data: carouselItems } = useQuery({
     queryKey: ['carousel', { use: 'home' }],
     queryFn: getCarousel,
@@ -52,8 +51,6 @@ export default function Home() {
   const moveMovieDetailPage = (movieCode: string) => {
     push(`/movies/${movieCode}`);
   };
-
-  // TODO: 로딩 및 에러 처리 고도화
 
   return (
     <>

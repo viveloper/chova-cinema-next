@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { AppProps } from 'next/app';
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import '@/styles/globals.css';
+import ErrorScreen from '@/components/ErrorScreen';
 
 const isMSWEnabled =
   process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_API_MOCKING_ENABLED === 'true';
@@ -26,7 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
-        defaultOptions: { queries: { refetchOnWindowFocus: false } },
+        defaultOptions: { queries: { refetchOnWindowFocus: false, useErrorBoundary: true } },
       }),
   );
   const [ready, setReady] = useState(!isMSWEnabled);
@@ -46,7 +48,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        <Component {...pageProps} />
+        <ErrorBoundary fallback={<ErrorScreen />}>
+          <Component {...pageProps} />
+        </ErrorBoundary>
       </Hydrate>
     </QueryClientProvider>
   );
