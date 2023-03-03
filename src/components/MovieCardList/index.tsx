@@ -3,14 +3,17 @@ import React, { useState } from 'react';
 import { Theme } from '../types';
 import MovieCard from './MovieCard';
 import classes from './MovieCardList.module.css';
+import { Props as MovieCardProps } from './MovieCard';
 
 interface Props {
   theme: Theme;
   movies: Movie[];
   showNum: number;
+  onTicketingClick: MovieCardProps['onTicketingClick'];
+  onDetailClick: MovieCardProps['onDetailClick'];
 }
 
-const MovieCardList = ({ theme, movies, showNum }: Props) => {
+const MovieCardList = ({ theme, movies, showNum, onTicketingClick, onDetailClick }: Props) => {
   const [startActiveIndex, setStartActiveIndex] = useState(0);
 
   const handlePrevClick = () => {
@@ -52,7 +55,13 @@ const MovieCardList = ({ theme, movies, showNum }: Props) => {
         >
           {movies.map((movie, index) => (
             <li key={movie.RepresentationMovieCode} className={classes.movie}>
-              <MovieCard movie={movie} number={index + 1} theme={theme} />
+              <MovieCard
+                movie={movie}
+                number={index + 1}
+                theme={theme}
+                onTicketingClick={onTicketingClick}
+                onDetailClick={onDetailClick}
+              />
             </li>
           ))}
         </ul>

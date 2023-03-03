@@ -6,6 +6,7 @@ import Layout from '@/components/Layout';
 import MovieCardList from '@/components/MovieCardList';
 import getCarousel from '@/query/carousel';
 import getMovies from '@/query/movie';
+import { useRouter } from 'next/router';
 
 export const getServerSideProps: GetServerSideProps<{
   dehydratedState: DehydratedState;
@@ -31,6 +32,8 @@ export const getServerSideProps: GetServerSideProps<{
 };
 
 export default function Home() {
+  const { push } = useRouter();
+
   // TODO: API 호출 에러 처리 공통화
   const { data: carouselItems } = useQuery({
     queryKey: ['carousel', { use: 'home' }],
@@ -41,6 +44,14 @@ export default function Home() {
     queryKey: ['movies', { limit: 21 }],
     queryFn: () => getMovies({ limit: 21 }),
   });
+
+  const moveTicketingPage = () => {
+    push('/ticketing');
+  };
+
+  const moveMovieDetailPage = (movieCode: string) => {
+    push(`/movies/${movieCode}`);
+  };
 
   // TODO: 로딩 및 에러 처리 고도화
 
@@ -56,7 +67,13 @@ export default function Home() {
         <Carousel theme="dark" height={774} items={carouselItems ?? []} />
         <section style={{ backgroundColor: '#000', padding: '32px 0' }}>
           <div className="center">
-            <MovieCardList theme="dark" movies={movies ?? []} showNum={5} />
+            <MovieCardList
+              theme="dark"
+              movies={movies ?? []}
+              showNum={5}
+              onTicketingClick={moveTicketingPage}
+              onDetailClick={moveMovieDetailPage}
+            />
           </div>
         </section>
       </Layout>
