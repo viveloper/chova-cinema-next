@@ -2,6 +2,8 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Carousel from '.';
 
+const S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
+
 export default {
   title: 'Components/Carousel',
   component: Carousel,
@@ -18,18 +20,18 @@ Primary.args = {
   height: 774,
   items: [
     {
-      img: '/CarouselMedia/OneDay_1920774.jpg',
-      video: '/CarouselMedia/OneDay_1280720.mp4',
+      img: `${S3_BASE_URL}/CarouselMedia/OneDay_1920774.jpg`,
+      video: `${S3_BASE_URL}/CarouselMedia/OneDay_1280720.mp4`,
       use: 'home',
     },
     {
-      img: '/CarouselMedia/SteelRain_1920774.jpg',
-      video: '/CarouselMedia/SteelRain_1280720.mp4',
+      img: `${S3_BASE_URL}/CarouselMedia/SteelRain_1920774.jpg`,
+      video: `${S3_BASE_URL}/CarouselMedia/SteelRain_1280720.mp4`,
       use: 'home',
     },
     {
-      img: '/CarouselMedia/Peninsula_1920774.jpg',
-      video: '/CarouselMedia/Peninsula_1280720.mp4',
+      img: `${S3_BASE_URL}/CarouselMedia/Peninsula_1920774.jpg`,
+      video: `${S3_BASE_URL}/CarouselMedia/Peninsula_1280720.mp4`,
       use: 'home',
     },
   ],

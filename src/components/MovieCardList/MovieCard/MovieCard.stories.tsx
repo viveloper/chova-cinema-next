@@ -2,6 +2,8 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import MovieCard from '.';
 
+const S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
+
 export default {
   title: 'Components/MovieCard',
   component: MovieCard,
@@ -23,7 +25,7 @@ Primary.args = {
     MovieNameKR: '원 데이',
     MovieNameUS: '원 데이',
     MovieName: null,
-    PosterURL: '/Media/MovieFile/MovieImg/202007/16119_101_1.jpg',
+    PosterURL: `${S3_BASE_URL}/Media/MovieFile/MovieImg/202007/16119_101_1.jpg`,
     ViewGradeCode: 15,
     ViewGradeNameKR: '15',
     ViewGradeNameUS: '15세이상관람가',
