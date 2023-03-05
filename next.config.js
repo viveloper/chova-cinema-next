@@ -11,7 +11,7 @@ const nextConfig = {
       },
     ],
   },
-  // output: 'standalone',
+  // output: 'standalone', // for docker use
   async rewrites() {
     return [
       {
