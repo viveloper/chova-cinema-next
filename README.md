@@ -2,7 +2,7 @@
 
 > [Chova Cinema](https://github.com/viveloper/chova-cinema) 리뉴얼 프로젝트
 
-## 작업 내용
+## 작업 할 내용
 
 - 정적 타입 언어 사용 (TypeScript)
 - CSR, SSR, SSG 활용 (Next.js)
@@ -12,12 +12,20 @@
 - Storybook / API 모킹(MSW) 기반 개발
 - 재사용성 증대를 위한 컴포넌트 리팩토링
 - 로딩 / 에러 핸들링 고도화
-- 정적 파일 데이터를 클라우드 DB로 변경
+- 파일 기반 데이터를 DB로 이관
 - 배포 자동화 (Vercel)
 
 ## 기술 스택 변경
 
 - Next.js, TypeScript, Recoil, TanStack Query(React Query), Emotion, Storybook, MSW
+
+## 주요 기능
+
+- [x] 영화 목록 보기
+- [ ] 영화 상세 보기
+- [ ] 영화 평점 및 관람평 작성
+- [ ] 영화 예매 및 결제 기능 (영화관, 영화, 시간, 인원, 좌석, 결제)
+- [ ] 마이 페이지 (결제 내역 및 결제 취소)
 
 ## 배포
 
