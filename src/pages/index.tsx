@@ -10,7 +10,9 @@ import { useRouter } from 'next/router';
 
 export const getServerSideProps: GetServerSideProps<{
   dehydratedState: DehydratedState;
-}> = async () => {
+}> = async ({ res }) => {
+  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
+
   const queryClient = new QueryClient();
 
   await Promise.all([
