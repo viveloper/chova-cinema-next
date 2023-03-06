@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { CarouselItem } from '@/types/carousel';
 
-const getCarousel = async () => {
+export type CarouselQuery = {
+  use?: 'home' | 'movie';
+};
+
+export const queryCarousel = async ({ use }: CarouselQuery) => {
   const res = await axios.get<CarouselItem[]>(`${process.env.NEXT_PUBLIC_HOST}/api/carousel`, {
-    params: { use: 'home' },
+    params: { use },
   });
   return res.data;
 };
-
-export default getCarousel;

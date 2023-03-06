@@ -4,9 +4,9 @@ import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/rea
 import Carousel from '@/components/Carousel';
 import Layout from '@/components/Layout';
 import MovieCardList from '@/components/MovieCardList';
-import getCarousel from '@/query/carousel';
-import getMovies from '@/query/movie';
 import { useRouter } from 'next/router';
+import { queryCarousel } from '@/query/carousel';
+import { queryMovies } from '@/query/movie';
 
 export const getServerSideProps: GetServerSideProps<{
   dehydratedState: DehydratedState;
@@ -18,11 +18,11 @@ export const getServerSideProps: GetServerSideProps<{
   await Promise.all([
     queryClient.prefetchQuery({
       queryKey: ['carousel', { use: 'home' }],
-      queryFn: getCarousel,
+      queryFn: () => queryCarousel({ use: 'home' }),
     }),
     queryClient.prefetchQuery({
       queryKey: ['movies', { limit: 21 }],
-      queryFn: () => getMovies({ limit: 21 }),
+      queryFn: () => queryMovies({ limit: 21 }),
     }),
   ]);
 
@@ -38,12 +38,12 @@ export default function Home() {
 
   const { data: carouselItems } = useQuery({
     queryKey: ['carousel', { use: 'home' }],
-    queryFn: getCarousel,
+    queryFn: () => queryCarousel({ use: 'home' }),
   });
 
   const { data: movies } = useQuery({
     queryKey: ['movies', { limit: 21 }],
-    queryFn: () => getMovies({ limit: 21 }),
+    queryFn: () => queryMovies({ limit: 21 }),
   });
 
   const moveTicketingPage = () => {

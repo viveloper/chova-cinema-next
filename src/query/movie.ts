@@ -1,15 +1,29 @@
 import axios from 'axios';
 import { Movie } from '@/types/movie';
 
-type MovieQuery = {
-  limit: number;
+export type MovieType = 'current' | 'pre';
+export type SpecialMovieType = 'arte' | 'opera';
+
+export type MoviesQuery = {
+  limit?: number;
+  type?: MovieType;
 };
 
-const getMovies = async ({ limit }: MovieQuery) => {
+export type SpecialMoviesQuery = {
+  limit?: number;
+  type: SpecialMovieType;
+};
+
+export const queryMovies = async ({ limit, type }: MoviesQuery) => {
   const res = await axios.get<Movie[]>(`${process.env.NEXT_PUBLIC_HOST}/api/movies`, {
-    params: { limit },
+    params: { limit, type },
   });
   return res.data;
 };
 
-export default getMovies;
+export const querySpecialMovies = async ({ limit, type }: SpecialMoviesQuery) => {
+  const res = await axios.get<Movie[]>(`${process.env.NEXT_PUBLIC_HOST}/api/movies/${type}`, {
+    params: { limit },
+  });
+  return res.data;
+};

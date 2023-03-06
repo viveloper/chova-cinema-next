@@ -1,8 +1,82 @@
 import Layout from '@/components/Layout';
+import { queryCarousel } from '@/query/carousel';
+import { queryMovies, querySpecialMovies } from '@/query/movie';
+import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 
-// TODO: SSR
+export const getServerSideProps: GetServerSideProps<{
+  dehydratedState: DehydratedState;
+}> = async ({ res }) => {
+  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
+
+  const queryClient = new QueryClient();
+
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: ['carousel', { use: 'movie' }],
+      queryFn: () => queryCarousel({ use: 'movie' }),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ['movies', { limit: 21, type: 'current' }],
+      queryFn: () => queryMovies({ limit: 21, type: 'current' }),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ['movies', { limit: 21, type: 'pre' }],
+      queryFn: () => queryMovies({ limit: 21, type: 'pre' }),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ['movies', { limit: 21, type: 'arte' }],
+      queryFn: () => querySpecialMovies({ limit: 21, type: 'arte' }),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ['movies', { limit: 21, type: 'opera' }],
+      queryFn: () => querySpecialMovies({ limit: 21, type: 'opera' }),
+    }),
+  ]);
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
+
+// TODO: SSR, 페이지네이션(더보기)
 export default function Movies() {
+  const { data: carouselItems } = useQuery({
+    queryKey: ['carousel', { use: 'movie' }],
+    queryFn: () => queryCarousel({ use: 'movie' }),
+  });
+
+  const { data: currentMovies } = useQuery({
+    queryKey: ['movies', { limit: 21, type: 'current' }],
+    queryFn: () => queryMovies({ limit: 21, type: 'current' }),
+  });
+
+  const { data: preMovies } = useQuery({
+    queryKey: ['movies', { limit: 21, type: 'pre' }],
+    queryFn: () => queryMovies({ limit: 21, type: 'pre' }),
+  });
+
+  const { data: arteMovies } = useQuery({
+    queryKey: ['movies', { limit: 21, type: 'arte' }],
+    queryFn: () => querySpecialMovies({ limit: 21, type: 'arte' }),
+  });
+
+  const { data: operaMovies } = useQuery({
+    queryKey: ['movies', { limit: 21, type: 'opera' }],
+    queryFn: () => querySpecialMovies({ limit: 21, type: 'opera' }),
+  });
+
+  console.log({
+    carouselItems,
+    currentMovies,
+    preMovies,
+    arteMovies,
+    operaMovies,
+  });
+
   return (
     <>
       <Head>
