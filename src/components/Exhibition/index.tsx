@@ -11,7 +11,7 @@ interface ExhibitionProps {
     name: string;
     url?: string;
   };
-  movies: Movie[];
+  movies?: Movie[];
   backgroundImage: string;
   fontColor: CSSProperties['color'];
 }

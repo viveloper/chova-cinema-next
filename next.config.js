@@ -22,6 +22,10 @@ const nextConfig = {
         source: '/CarouselMedia/:path*',
         destination: `${process.env.NEXT_PUBLIC_S3_BASE_URL}/CarouselMedia/:path*`,
       },
+      {
+        source: '/img/:path*',
+        destination: `${process.env.NEXT_PUBLIC_S3_BASE_URL}/img/:path*`,
+      },
     ];
   },
 };
