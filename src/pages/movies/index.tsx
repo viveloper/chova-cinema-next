@@ -3,7 +3,7 @@ import Exhibition from '@/components/Exhibition';
 import Layout from '@/components/Layout';
 import TopMovies from '@/components/TopMovies';
 import { queryCarousel } from '@/query/carousel';
-import { MovieType, queryMovies, querySpecialMovies } from '@/query/movie';
+import { MovieType, queryMovies } from '@/query/movie';
 import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
@@ -24,20 +24,20 @@ export const getServerSideProps: GetServerSideProps<{
       queryFn: () => queryCarousel({ use: 'movie' }),
     }),
     queryClient.prefetchQuery({
-      queryKey: ['movies', { type: 'current' }],
-      queryFn: () => queryMovies({ type: 'current' }),
+      queryKey: ['movies', { playing: 'Y', limit: 5 }],
+      queryFn: () => queryMovies({ playing: 'Y', limit: 5 }),
     }),
     queryClient.prefetchQuery({
-      queryKey: ['movies', { type: 'pre' }],
-      queryFn: () => queryMovies({ type: 'pre' }),
+      queryKey: ['movies', { playing: 'N', limit: 5 }],
+      queryFn: () => queryMovies({ playing: 'N', limit: 5 }),
     }),
     queryClient.prefetchQuery({
       queryKey: ['movies', { type: 'arte' }],
-      queryFn: () => querySpecialMovies({ type: 'arte' }),
+      queryFn: () => queryMovies({ type: 'arte' }),
     }),
     queryClient.prefetchQuery({
       queryKey: ['movies', { type: 'opera' }],
-      queryFn: () => querySpecialMovies({ type: 'opera' }),
+      queryFn: () => queryMovies({ type: 'opera' }),
     }),
   ]);
 
@@ -57,27 +57,27 @@ export default function Movies() {
   });
 
   const { data: currentMovies } = useQuery({
-    queryKey: ['movies', { type: 'current' }],
-    queryFn: () => queryMovies({ type: 'current' }),
+    queryKey: ['movies', { playing: 'Y', limit: 5 }],
+    queryFn: () => queryMovies({ playing: 'Y', limit: 5 }),
   });
 
   const { data: preMovies } = useQuery({
-    queryKey: ['movies', { type: 'pre' }],
-    queryFn: () => queryMovies({ type: 'pre' }),
+    queryKey: ['movies', { playing: 'N', limit: 5 }],
+    queryFn: () => queryMovies({ playing: 'N', limit: 5 }),
   });
 
   const { data: arteMovies } = useQuery({
     queryKey: ['movies', { type: 'arte' }],
-    queryFn: () => querySpecialMovies({ type: 'arte' }),
+    queryFn: () => queryMovies({ type: 'arte' }),
   });
 
   const { data: operaMovies } = useQuery({
     queryKey: ['movies', { type: 'opera' }],
-    queryFn: () => querySpecialMovies({ type: 'opera' }),
+    queryFn: () => queryMovies({ type: 'opera' }),
   });
 
-  const moveSubMoviesPage = (type: MovieType) => {
-    push(`/movies/${type}`);
+  const moveSubMoviesPage = (subType: 'current' | 'pre') => {
+    push(`/movies/${subType}`);
   };
 
   const moveTicketingPage = () => {

@@ -30,8 +30,8 @@
 
 ## 배포
 
-서비스 : https://chova-cinema-next.vercel.app
-스토리북 : https://6405c80c29140ed0511a0535-cftehltwra.chromatic.com
+- 서비스 : https://chova-cinema-next.vercel.app
+- 스토리북 : https://6405c80c29140ed0511a0535-cftehltwra.chromatic.com
 
 ## 실행
 
