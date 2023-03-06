@@ -76,14 +76,6 @@ export default function Movies() {
     queryFn: () => querySpecialMovies({ type: 'opera' }),
   });
 
-  console.log({
-    carouselItems,
-    currentMovies,
-    preMovies,
-    arteMovies,
-    operaMovies,
-  });
-
   const moveSubMoviesPage = (type: MovieType) => {
     push(`/movies/${type}`);
   };
