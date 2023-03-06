@@ -9,6 +9,8 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
+// TODO: 백엔드 REST API 구조 개선
+
 export const getServerSideProps: GetServerSideProps<{
   dehydratedState: DehydratedState;
 }> = async ({ res }) => {
@@ -46,7 +48,6 @@ export const getServerSideProps: GetServerSideProps<{
   };
 };
 
-// TODO: 페이지네이션(더보기)
 export default function Movies() {
   const { push } = useRouter();
 

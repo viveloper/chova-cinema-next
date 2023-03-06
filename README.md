@@ -14,6 +14,7 @@
 - 로딩 / 에러 핸들링 고도화
 - 파일 기반 데이터를 DB로 이관
 - 배포 자동화 (Vercel)
+- 스토리북 배포
 
 ## 기술 스택 변경
 
@@ -29,7 +30,8 @@
 
 ## 배포
 
-도메인 : https://chova-cinema-next.vercel.app
+서비스 : https://chova-cinema-next.vercel.app
+스토리북 : https://6405c80c29140ed0511a0535-trzlhggxqd.chromatic.com
 
 ## 실행
 
