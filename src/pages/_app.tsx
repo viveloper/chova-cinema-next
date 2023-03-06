@@ -28,7 +28,13 @@ export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
-        defaultOptions: { queries: { refetchOnWindowFocus: false, useErrorBoundary: true } },
+        defaultOptions: {
+          queries: {
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+            useErrorBoundary: true,
+          },
+        },
       }),
   );
   const [ready, setReady] = useState(!isMSWEnabled);

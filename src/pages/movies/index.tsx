@@ -9,7 +9,7 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-// TODO: 백엔드 REST API 구조 개선
+// TODO: BFF(API Routes) 개선하여 API 호출 횟수 및 데이터 스키마 정제
 
 export const getServerSideProps: GetServerSideProps<{
   dehydratedState: DehydratedState;
