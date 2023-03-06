@@ -11,15 +11,16 @@ interface Props {
   height?: number;
   width?: number;
   items: Array<CarouselItem>;
+  delay?: number;
 }
 
-const Carousel = ({ theme = 'light', height, width, items }: Props) => {
+const Carousel = ({ theme = 'light', height, width, items, delay = 5000 }: Props) => {
   const [activeItem, setActiveItem] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       handleNextClick();
-    }, 5000);
+    }, delay);
     return () => {
       clearInterval(interval);
     };

@@ -18,6 +18,7 @@ export const Primary = Template.bind({});
 Primary.args = {
   theme: 'light',
   height: 774,
+  delay: 4500,
   items: [
     {
       img: `${S3_BASE_URL}/CarouselMedia/OneDay_1920774.jpg`,
