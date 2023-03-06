@@ -5,7 +5,7 @@ import MovieCard from './MovieCard';
 import classes from './MovieCardList.module.css';
 import { Props as MovieCardProps } from './MovieCard';
 
-interface Props {
+export interface Props {
   theme: Theme;
   movies: Movie[];
   showNum: number;
