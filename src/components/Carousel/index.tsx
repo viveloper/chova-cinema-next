@@ -47,7 +47,10 @@ const Carousel = ({ theme = 'light', height, width, items, delay = 5000 }: Props
   return (
     <div className={`${classes.carousel} ${theme === 'dark' ? `${classes.dark}` : ''}`}>
       <div className={classes.container}>
-        <ul className={classes.items} style={{ transform: `translateX(${activeItem * -100}%)` }}>
+        <ul
+          className={classes.items}
+          style={{ transform: `translateX(${activeItem * -100}%)`, marginTop: '1px' }}
+        >
           {items.map((item, index) => (
             <li key={item.img} className={`${classes.item} ${item.video ? classes.playable : ''}`}>
               <a href="#play" onClick={(e) => handleImgClick(e, index)}>
