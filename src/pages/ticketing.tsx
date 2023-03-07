@@ -2,7 +2,7 @@ import ComingSoon from '@/components/ComingSoon';
 import Layout from '@/components/Layout';
 import Head from 'next/head';
 
-function Ticketing() {
+export default function TicketingPage() {
   return (
     <>
       <Head>
@@ -17,5 +17,3 @@ function Ticketing() {
     </>
   );
 }
-
-export default Ticketing;

@@ -3,7 +3,7 @@ import Layout from '@/components/Layout';
 import Head from 'next/head';
 
 // TODO: SSR, 페이지네이션(더보기)
-export default function PreMovies() {
+export default function PreMoviesPage() {
   return (
     <>
       <Head>

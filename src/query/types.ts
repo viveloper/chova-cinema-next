@@ -200,6 +200,17 @@ export type SpecialScreen = {
   MobileUrl: string;
 };
 
+export type Trailer = {
+  ImageDivisionCode: string;
+  ImageDivisionName: string;
+  ImageURL: string;
+  ImageAlter: string;
+  MediaURL: string;
+  SortSequence: number;
+  ImageTypeCd: string;
+  MediaTitle: string;
+};
+
 export type HomePageRes = {
   carouselItems: CarouselItem[];
   movies: Movie[];
@@ -211,6 +222,13 @@ export type MoviesPageRes = {
   preMovies: Movie[];
   arteMovies: Movie[];
   operaMovies: Movie[];
+};
+
+export type MovieDetailPageRes = {
+  carouselItems: CarouselItem[];
+  movieDetail: MovieDetail;
+  casting: Casting[];
+  specialScreen: SpecialScreen[];
 };
 
 export type CarouselQuery = {

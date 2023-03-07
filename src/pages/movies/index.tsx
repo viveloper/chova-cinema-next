@@ -2,7 +2,7 @@ import Carousel from '@/components/Carousel';
 import Exhibition from '@/components/Exhibition';
 import Layout from '@/components/Layout';
 import TopMovies from '@/components/TopMovies';
-import { queryMoviesPageData } from '@/query/moviesPage';
+import { queryMoviesPageData } from '@/query/moviesPageData';
 import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<{
   };
 };
 
-export default function Movies() {
+export default function MoviesPage() {
   const { push } = useRouter();
 
   const { data } = useQuery({

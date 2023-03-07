@@ -5,7 +5,7 @@ import Carousel from '@/components/Carousel';
 import Layout from '@/components/Layout';
 import MovieCardList from '@/components/MovieCardList';
 import { useRouter } from 'next/router';
-import { queryHomePageData } from '@/query/homePage';
+import { queryHomePageData } from '@/query/homePageData';
 
 export const getServerSideProps: GetServerSideProps<{
   dehydratedState: DehydratedState;
@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps<{
   };
 };
 
-export default function Home() {
+export default function HomePage() {
   const { push } = useRouter();
 
   const { data } = useQuery({
