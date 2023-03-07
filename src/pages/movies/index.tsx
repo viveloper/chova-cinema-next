@@ -4,16 +4,16 @@ import Layout from '@/components/Layout';
 import TopMovies from '@/components/TopMovies';
 import { queryMoviesPageData } from '@/query/moviesPageData';
 import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
-import { GetServerSideProps, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 // TODO: BFF(API Routes) 개선하여 API 호출 횟수 및 데이터 스키마 정제
 
-export const getStaticProps: GetStaticProps<{
+export const getServerSideProps: GetServerSideProps<{
   dehydratedState: DehydratedState;
-}> = async () => {
-  // res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+}> = async ({ res }) => {
+  res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
 
   const queryClient = new QueryClient();
 

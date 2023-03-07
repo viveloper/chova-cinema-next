@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
 import Carousel from '@/components/Carousel';
@@ -7,10 +7,10 @@ import MovieCardList from '@/components/MovieCardList';
 import { useRouter } from 'next/router';
 import { queryHomePageData } from '@/query/homePageData';
 
-export const getStaticProps: GetStaticProps<{
+export const getServerSideProps: GetServerSideProps<{
   dehydratedState: DehydratedState;
-}> = async () => {
-  // res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+}> = async ({ res }) => {
+  res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
 
   const queryClient = new QueryClient();
 
@@ -31,7 +31,7 @@ export default function HomePage() {
 
   const { data } = useQuery({
     queryKey: ['pages/home'],
-    queryFn: queryHomePageData,
+    queryFn: () => queryHomePageData(),
   });
 
   const moveTicketingPage = () => {
