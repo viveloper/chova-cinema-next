@@ -38,7 +38,8 @@ export default function Movies() {
   });
 
   const moveSubMoviesPage = (subType: 'current' | 'pre') => {
-    push(`/movies/${subType}`);
+    // TODO: 상영 중인 영화 목록 / 상영 예정인 영화 목록 페이지 라우트
+    // push(`/movies/${subType}`);
   };
 
   const moveTicketingPage = () => {

@@ -1,99 +1,26 @@
-import Carousel from '@/components/Carousel';
-import ComingSoon from '@/components/ComingSoon';
-import Layout from '@/components/Layout';
-import MovieDetailHead from '@/components/MovieDetailHead';
-import { CarouselItem, Casting, MovieDetail, SpecialScreen } from '@/query/types';
-import Head from 'next/head';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
+import React from 'react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
+import MovieDetailHead from '.';
 
-// TODO: step1 SSR, step2 SSG
-export default function MovieDetailPage() {
-  const router = useRouter();
-  const { id } = router.query;
+const S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
 
-  const carouselItems: CarouselItem[] = [
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_1.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_2.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_3.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_4.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_5.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_6.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_7.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_8.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_9.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_10.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_11.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_12.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_13.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_14.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_15.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_16.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_17.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_18.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_19.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_20.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_21.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_22.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_23.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_24.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_105_25.jpg',
-    },
-    {
-      img: 'https://chova-cinema.s3.ap-northeast-2.amazonaws.com/Media/MovieFile/MovieImg/202007/16010_201_1.jpg',
-    },
-  ];
+export default {
+  title: 'Components/MovieDetailHead',
+  component: MovieDetailHead,
+  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
+  argTypes: {},
+} as ComponentMeta<typeof MovieDetailHead>;
 
-  const movieDetail: MovieDetail = {
+const Template: ComponentStory<typeof MovieDetailHead> = (args) => (
+  <div className="center">
+    <MovieDetailHead {...args} />
+  </div>
+);
+
+export const Primary = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+Primary.args = {
+  movieDetail: {
     MakingNationNameKR: '한국',
     MakingNationNameUS: '한국',
     MakingNationName: null,
@@ -133,7 +60,7 @@ export default function MovieDetailPage() {
     MovieNameKR: '반도',
     MovieNameUS: '반도',
     MovieName: null,
-    PosterURL: `/Media/MovieFile/MovieImg/202007/16010_103_1.jpg`,
+    PosterURL: `${S3_BASE_URL}/Media/MovieFile/MovieImg/202007/16010_103_1.jpg`,
     ViewGradeCode: 15,
     ViewGradeNameKR: '15세이상관람가',
     ViewGradeNameUS: '15세이상관람가',
@@ -205,9 +132,8 @@ export default function MovieDetailPage() {
     LikeCount: 1040,
     TargetMovieListCode: 0,
     ViewCountSortSequence: 0,
-  };
-
-  const casting: Casting[] = [
+  },
+  casting: [
     {
       RepresentationMovieCode: '16010',
       StaffName: '연상호',
@@ -238,9 +164,8 @@ export default function MovieDetailPage() {
       StaffImage: '/Media/MovieFile/PersonImg/85000/84891_107_5.jpg',
       Role: '배우',
     },
-  ];
-
-  const specialScreen: SpecialScreen[] = [
+  ],
+  specialScreen: [
     {
       SpecialScreenDivisionCode: '300',
       SpecialScreenDivisionName: '샤롯데',
@@ -345,31 +270,5 @@ export default function MovieDetailPage() {
       BadgeFileNm: 'f1df2d0bcc054d24a75dee03c41d4c26.png',
       MobileUrl: '/NLCMW/Cinema/SpecialDetail?detailDivisionCode=0986',
     },
-  ];
-
-  const handleTicketingClick = () => {};
-
-  return (
-    <>
-      <Head>
-        <title>Movie Detail - Chova Cinema</title>
-        <meta name="description" content="Generated by create next app" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Layout>
-        <Carousel height={560} width={840} items={carouselItems} />
-        <section style={{ marginTop: '28px' }}>
-          <div className="center">
-            <MovieDetailHead
-              movieDetail={movieDetail}
-              casting={casting}
-              specialScreen={specialScreen}
-              onTicketingClick={handleTicketingClick}
-            />
-          </div>
-        </section>
-      </Layout>
-    </>
-  );
-}
+  ].map((item) => ({ ...item, FilePath: `${S3_BASE_URL}${item.FilePath}` })),
+};

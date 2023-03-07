@@ -39,7 +39,9 @@ const Carousel = ({ theme = 'light', height, width, items, delay = 5000 }: Props
 
   const handleImgClick = (e: MouseEvent<HTMLAnchorElement>, index: number) => {
     e.preventDefault();
-    handlePlay(items[index].video);
+    const { video } = items[index];
+    if (!video) return;
+    handlePlay(video);
   };
 
   const { src, isActive, handlePlay, handleClose } = useLayerMovieTrailer();

@@ -1,7 +1,7 @@
 export type CarouselItem = {
   img: string;
-  video: string;
-  use: 'home' | 'movie';
+  video?: string;
+  use?: 'home' | 'movie';
 };
 
 export type Movie = {
@@ -74,6 +74,130 @@ export type Movie = {
   LikeCount: number;
   TargetMovieListCode: number;
   ViewCountSortSequence: number;
+};
+
+export type ViewGradeCode = 0 | 12 | 15 | 18;
+
+export type MovieDetail = {
+  MakingNationNameKR: string;
+  MakingNationNameUS: string;
+  MakingNationName: any;
+  MovieGenreCode: string;
+  PlayTime: number;
+  SoundTypeCode: string;
+  SoundTypeNameKR: string;
+  SoundTypeNameUS: string;
+  FourDTypeCode: string;
+  FourDTypeNameKR: string;
+  FourDTypeNameUS: string;
+  TranslationDivisionCode: string;
+  TranslationDivisionNameKR: string;
+  TranslationDivisionNameUS: string;
+  HomepageURL: string;
+  SynopsisKR: string;
+  SynopsisUS: string;
+  Synopsis: any;
+  TotalViewCount: number;
+  AgePrefer10: string;
+  AgePrefer20: string;
+  AgePrefer30: string;
+  AgePrefer40: string;
+  ManPrefer: string;
+  WomanPrefer: string;
+  KOFCustCnt: number;
+  AggrDt: string;
+  MakingNationNameKR2: string;
+  MakingNationNameKR3: string;
+  MovieGenreNameKR2: string;
+  MovieGenreNameKR3: string;
+  RepresentationMovieCode: string;
+  MoviePlayYN: string;
+  MoviePlayEndYN: number;
+  MovieNameKR: string;
+  MovieNameUS: string;
+  MovieName: any;
+  PosterURL: string;
+  ViewGradeCode: ViewGradeCode;
+  ViewGradeNameKR: string;
+  ViewGradeNameUS: string;
+  ViewGradeName: any;
+  BookingRate: number;
+  ReleaseDate: string;
+  DDay: any;
+  ExpectEvaluation: number;
+  ViewEvaluation: number;
+  Evaluation: number;
+  BookingYN: string;
+  ViewRate: number;
+  SpecialScreenDivisionCode: string[];
+  SoloOpenYN: any;
+  OpenORClosing: number;
+  BookingRank: string;
+  ViewSortSequence: any;
+  BookingSortSequence: any;
+  FilmCode: string;
+  FilmName: string;
+  MovieFestivalID: number;
+  DirectorName: any;
+  ActorName: any;
+  MovieGenreNameKR: string;
+  MovieGenreNameUS: string;
+  MovieGenreName: any;
+  ProductionCompanyName: string;
+  MovieDivisionCode: any;
+  MovieFestivalName: any;
+  MovieFestivalFilmCount: any;
+  MovieFestivalOpenDate: any;
+  MovieFestivalFinalDate: any;
+  MovieFestivalOpenMovieCode: any;
+  MovieFestivalOpenMovieName: any;
+  MovieFestivalFinalMovieCode: any;
+  MovieFestivalFinalMovieName: any;
+  ImagePath: any;
+  ImageALT: any;
+  LinkDivisionCode: any;
+  ParameterEventID: any;
+  ParameterRepMovieCode: any;
+  URL: any;
+  PopupTitle: any;
+  KOFMovieCd: any;
+  PlanedRelsYN: number;
+  PlanedRelsMnth: string;
+  KeywordID: any;
+  KeywordNm: any;
+  MoreLookCD: any;
+  MoreLookUrl: any;
+  MoreLookImgUrl: any;
+  MoreLookImgAlt: any;
+  UpdateYn: any;
+  ArrayStandardCd: any;
+  UpdateDt: any;
+  LikeYN: string;
+  ViewCount: number;
+  LikeCount: number;
+  TargetMovieListCode: number;
+  ViewCountSortSequence: number;
+};
+
+export type Casting = {
+  RepresentationMovieCode: string;
+  StaffName: string;
+  StaffImage: string;
+  Role: string;
+};
+
+export type SpecialScreen = {
+  SpecialScreenDivisionCode: string;
+  SpecialScreenDivisionName: string;
+  IconImageFileName: string;
+  IconImageAlt: string;
+  BigImageFileName: string;
+  BigImageAlt: string;
+  FilePath: string;
+  Url: string;
+  BadgeImgALT: string;
+  BadgeFileNm: string;
+  MobileUrl: string;
 };
 
 export type HomePageRes = {
