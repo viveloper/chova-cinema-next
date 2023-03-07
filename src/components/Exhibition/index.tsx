@@ -1,8 +1,8 @@
 import React, { CSSProperties } from 'react';
 import Link from 'next/link';
-import { Movie } from '@/types/movie';
 import MovieCardList from '../MovieCardList';
 import classes from './Exhibition.module.css';
+import { Movie } from '@/query/types';
 
 interface ExhibitionProps {
   title: string;

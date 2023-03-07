@@ -5,8 +5,7 @@ import Carousel from '@/components/Carousel';
 import Layout from '@/components/Layout';
 import MovieCardList from '@/components/MovieCardList';
 import { useRouter } from 'next/router';
-import { queryCarousel } from '@/query/carousel';
-import { queryMovies } from '@/query/movie';
+import { queryHomePageData } from '@/query/homePage';
 
 export const getServerSideProps: GetServerSideProps<{
   dehydratedState: DehydratedState;
@@ -15,16 +14,10 @@ export const getServerSideProps: GetServerSideProps<{
 
   const queryClient = new QueryClient();
 
-  await Promise.all([
-    queryClient.prefetchQuery({
-      queryKey: ['carousel', { use: 'home' }],
-      queryFn: () => queryCarousel({ use: 'home' }),
-    }),
-    queryClient.prefetchQuery({
-      queryKey: ['movies', { limit: 21 }],
-      queryFn: () => queryMovies({ limit: 21 }),
-    }),
-  ]);
+  await queryClient.prefetchQuery({
+    queryKey: ['pages/home'],
+    queryFn: () => queryHomePageData(),
+  });
 
   return {
     props: {
@@ -36,14 +29,9 @@ export const getServerSideProps: GetServerSideProps<{
 export default function Home() {
   const { push } = useRouter();
 
-  const { data: carouselItems } = useQuery({
-    queryKey: ['carousel', { use: 'home' }],
-    queryFn: () => queryCarousel({ use: 'home' }),
-  });
-
-  const { data: movies } = useQuery({
-    queryKey: ['movies', { limit: 21 }],
-    queryFn: () => queryMovies({ limit: 21 }),
+  const { data } = useQuery({
+    queryKey: ['pages/home'],
+    queryFn: () => queryHomePageData(),
   });
 
   const moveTicketingPage = () => {
@@ -63,12 +51,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout theme="dark">
-        <Carousel theme="dark" height={774} items={carouselItems ?? []} />
+        <Carousel theme="dark" height={774} items={data?.carouselItems ?? []} />
         <section style={{ backgroundColor: '#000', padding: '32px 0' }}>
           <div className="center">
             <MovieCardList
               theme="dark"
-              movies={movies ?? []}
+              movies={data?.movies ?? []}
               showNum={5}
               onTicketingClick={moveTicketingPage}
               onDetailClick={moveMovieDetailPage}

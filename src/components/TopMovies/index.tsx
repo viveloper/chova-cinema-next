@@ -1,10 +1,9 @@
 import { MouseEvent } from 'react';
 import Link from 'next/link';
-import { MovieType } from '@/query/movie';
-import { Movie } from '@/types/movie';
 import MovieCardList from '../MovieCardList';
 import { Props as MovieCardListProps } from '../MovieCardList';
 import classes from './TopMovies.module.css';
+import { Movie } from '@/query/types';
 
 interface Props {
   title: string;

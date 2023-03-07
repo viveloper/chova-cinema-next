@@ -1,9 +1,9 @@
-import { Movie } from '@/types/movie';
 import React, { useState } from 'react';
 import { Theme } from '../types';
 import MovieCard from './MovieCard';
 import classes from './MovieCardList.module.css';
 import { Props as MovieCardProps } from './MovieCard';
+import { Movie } from '@/query/types';
 
 export interface Props {
   theme: Theme;

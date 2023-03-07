@@ -4,7 +4,7 @@ import useLayerMovieTrailer from '@/hooks/useLayerMovieTrailer';
 import LayerMovieTrailer from '../LayerMovieTrailer';
 import { Theme } from '../types';
 import classes from './Carousel.module.css';
-import { CarouselItem } from '@/types/carousel';
+import { CarouselItem } from '@/query/types';
 
 interface Props {
   theme?: Theme;

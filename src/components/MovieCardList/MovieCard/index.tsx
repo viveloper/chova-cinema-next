@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import classes from './MovieCard.module.css';
 import { Theme } from '@/components/types';
-import { Movie } from '@/types/movie';
+import { Movie } from '@/query/types';
 
 export interface Props {
   movie: Movie;

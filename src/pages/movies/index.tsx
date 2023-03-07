@@ -2,8 +2,7 @@ import Carousel from '@/components/Carousel';
 import Exhibition from '@/components/Exhibition';
 import Layout from '@/components/Layout';
 import TopMovies from '@/components/TopMovies';
-import { queryCarousel } from '@/query/carousel';
-import { MovieType, queryMovies } from '@/query/movie';
+import { queryMoviesPageData } from '@/query/moviesPage';
 import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
@@ -18,28 +17,10 @@ export const getServerSideProps: GetServerSideProps<{
 
   const queryClient = new QueryClient();
 
-  await Promise.all([
-    queryClient.prefetchQuery({
-      queryKey: ['carousel', { use: 'movie' }],
-      queryFn: () => queryCarousel({ use: 'movie' }),
-    }),
-    queryClient.prefetchQuery({
-      queryKey: ['movies', { playing: 'Y', limit: 5 }],
-      queryFn: () => queryMovies({ playing: 'Y', limit: 5 }),
-    }),
-    queryClient.prefetchQuery({
-      queryKey: ['movies', { playing: 'N', limit: 5 }],
-      queryFn: () => queryMovies({ playing: 'N', limit: 5 }),
-    }),
-    queryClient.prefetchQuery({
-      queryKey: ['movies', { type: 'arte' }],
-      queryFn: () => queryMovies({ type: 'arte' }),
-    }),
-    queryClient.prefetchQuery({
-      queryKey: ['movies', { type: 'opera' }],
-      queryFn: () => queryMovies({ type: 'opera' }),
-    }),
-  ]);
+  await queryClient.prefetchQuery({
+    queryKey: ['pages/movies'],
+    queryFn: () => queryMoviesPageData(),
+  });
 
   return {
     props: {
@@ -51,29 +32,9 @@ export const getServerSideProps: GetServerSideProps<{
 export default function Movies() {
   const { push } = useRouter();
 
-  const { data: carouselItems } = useQuery({
-    queryKey: ['carousel', { use: 'movie' }],
-    queryFn: () => queryCarousel({ use: 'movie' }),
-  });
-
-  const { data: currentMovies } = useQuery({
-    queryKey: ['movies', { playing: 'Y', limit: 5 }],
-    queryFn: () => queryMovies({ playing: 'Y', limit: 5 }),
-  });
-
-  const { data: preMovies } = useQuery({
-    queryKey: ['movies', { playing: 'N', limit: 5 }],
-    queryFn: () => queryMovies({ playing: 'N', limit: 5 }),
-  });
-
-  const { data: arteMovies } = useQuery({
-    queryKey: ['movies', { type: 'arte' }],
-    queryFn: () => queryMovies({ type: 'arte' }),
-  });
-
-  const { data: operaMovies } = useQuery({
-    queryKey: ['movies', { type: 'opera' }],
-    queryFn: () => queryMovies({ type: 'opera' }),
+  const { data } = useQuery({
+    queryKey: ['pages/movies'],
+    queryFn: () => queryMoviesPageData(),
   });
 
   const moveSubMoviesPage = (subType: 'current' | 'pre') => {
@@ -97,13 +58,13 @@ export default function Movies() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Carousel theme="light" height={420} items={carouselItems ?? []} />
+        <Carousel theme="light" height={420} items={data?.carouselItems ?? []} />
         <div className="center" style={{ paddingTop: '32px' }}>
           <section style={{ marginTop: '16px' }}>
             <TopMovies
               title="현재 상영작"
               showNum={5}
-              movies={currentMovies ?? []}
+              movies={data?.currentMovies ?? []}
               onMoreClick={() => moveSubMoviesPage('current')}
               onTicketingClick={moveTicketingPage}
               onDetailClick={moveMovieDetailPage}
@@ -113,7 +74,7 @@ export default function Movies() {
             <TopMovies
               title="상영 예정작"
               showNum={5}
-              movies={preMovies ?? []}
+              movies={data?.preMovies ?? []}
               onMoreClick={() => moveSubMoviesPage('pre')}
               onTicketingClick={moveTicketingPage}
               onDetailClick={moveMovieDetailPage}
@@ -133,7 +94,7 @@ export default function Movies() {
               link={{ name: '아르떼 바로가기' }}
               backgroundImage={`/img/exhibition/bg_exhib_01.png`}
               fontColor="#000"
-              movies={arteMovies}
+              movies={data?.arteMovies}
             />
             <Exhibition
               title={'해외명작'}
@@ -141,7 +102,7 @@ export default function Movies() {
               link={{ name: '오페라 바로가기' }}
               backgroundImage={`/img/exhibition/bg_exhib_02.png`}
               fontColor="#fff"
-              movies={operaMovies}
+              movies={data?.operaMovies}
             />
             <Exhibition
               title={'인생영화'}

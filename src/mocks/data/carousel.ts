@@ -1,4 +1,4 @@
-import { CarouselItem } from '@/types/carousel';
+import { CarouselItem } from '@/query/types';
 
 export const CAROUSEL_ITEMS: CarouselItem[] = [
   {

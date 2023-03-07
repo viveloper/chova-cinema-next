@@ -1,4 +1,4 @@
-import { Movie } from '@/types/movie';
+import { Movie } from '@/query/types';
 
 export const MOVIES_HOME: Movie[] = [
   {
