@@ -7,6 +7,7 @@ import MovieCardList from '@/components/MovieCardList';
 import { useRouter } from 'next/router';
 import { queryHomePageData } from '@/query/homePageData';
 
+// TODO: SSG or ISR
 export const getServerSideProps: GetServerSideProps<{
   dehydratedState: DehydratedState;
 }> = async ({ res }) => {
