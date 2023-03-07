@@ -1,3 +1,4 @@
+import ComingSoon from '@/components/ComingSoon';
 import Layout from '@/components/Layout';
 import Head from 'next/head';
 
@@ -12,7 +13,7 @@ export default function PreMovies() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <div className="center">Pre Movies</div>
+        <ComingSoon />
       </Layout>
     </>
   );

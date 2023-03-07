@@ -10,7 +10,7 @@ import { queryHomePageData } from '@/query/homePage';
 export const getServerSideProps: GetServerSideProps<{
   dehydratedState: DehydratedState;
 }> = async ({ res }) => {
-  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
+  res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
 
   const queryClient = new QueryClient();
 

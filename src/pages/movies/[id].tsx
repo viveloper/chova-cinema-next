@@ -1,3 +1,4 @@
+import ComingSoon from '@/components/ComingSoon';
 import Layout from '@/components/Layout';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -15,7 +16,7 @@ export default function MovieDetail() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <div className="center">{'Movie Detail : ' + id}</div>
+        <ComingSoon />
       </Layout>
     </>
   );

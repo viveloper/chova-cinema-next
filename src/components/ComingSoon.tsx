@@ -1,19 +1,18 @@
-// TODO: 에러 화면 고도화
-const ErrorScreen = () => {
+function ComingSoon() {
   return (
     <div
       className="center"
       style={{
-        height: '100vh',
+        height: '400px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         color: '#6B6B6B',
       }}
     >
-      <h1>Something went wrong.</h1>
+      <h1>준비 중입니다.</h1>
     </div>
   );
-};
+}
 
-export default ErrorScreen;
+export default ComingSoon;
