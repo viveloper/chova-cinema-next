@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-// TODO: step1 SSR, step2 SSG
+// TODO: SSG or ISR
 export default function MovieDetailPage() {
   const router = useRouter();
   const { movieCode } = router.query;
