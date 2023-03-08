@@ -7,6 +7,8 @@ export interface AgePreferProps {
   agePrefer40: number;
 }
 
+// TODO: 스타일링 개선(인라인 스타일 및 클래스네임 복잡성 개선)
+
 const AgePrefer = ({ agePrefer10, agePrefer20, agePrefer30, agePrefer40 }: AgePreferProps) => {
   const preferList = [agePrefer10, agePrefer20, agePrefer30, agePrefer40];
   const maxValue = Math.max(...preferList);

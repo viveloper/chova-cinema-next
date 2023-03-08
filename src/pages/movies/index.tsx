@@ -8,7 +8,8 @@ import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/rea
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 
-// TODO: SSG or ISR
+// TODO: ISR(Incremental Static Regeneration)
+
 export const getStaticProps: GetStaticProps<{
   dehydratedState: DehydratedState;
 }> = async () => {
@@ -34,6 +35,7 @@ export default function MoviesPage() {
 
   const moveSubMoviesPage = (subType: 'current' | 'pre') => {
     // TODO: 상영 중인 영화 목록 / 상영 예정인 영화 목록 페이지 라우트
+    // TODO: 가능하면 Link 컴포넌트의 href 사용하여 prefetch 기능 활성화
     // push(`/movies/${subType}`);
   };
 

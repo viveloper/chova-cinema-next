@@ -14,7 +14,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-// TODO: SSG or ISR
+// TODO: ISR(Incremental Static Regeneration)
 
 type PathParams = {
   movieCode: string;

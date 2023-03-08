@@ -8,7 +8,8 @@ import { queryHomePageData } from '@/query/homePageData';
 import { HomePageData } from '@/query/types';
 import { createQueryKey } from '@/query';
 
-// TODO: SSG or ISR
+// TODO: ISR(Incremental Static Regeneration)
+
 export const getStaticProps: GetStaticProps<{
   dehydratedState: DehydratedState;
 }> = async () => {

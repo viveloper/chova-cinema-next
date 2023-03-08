@@ -2,6 +2,7 @@ import ComingSoon from '@/components/ComingSoon';
 import Layout from '@/components/Layout';
 import Head from 'next/head';
 
+// TODO: ticketing 페이지 구현
 export default function TicketingPage() {
   return (
     <>

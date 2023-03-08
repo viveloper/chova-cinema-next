@@ -13,7 +13,6 @@ export interface Props {
   movieDetailPath: string;
 }
 
-// TODO: SCSS를 사용하거나 CSS in JS 사용해서 리팩토링
 const MovieCard = ({ movie, number, theme, ticketingPath, movieDetailPath }: Props) => {
   return (
     <div className={`${classes.card} ${theme === 'light' ? classes.light : ''}`}>
