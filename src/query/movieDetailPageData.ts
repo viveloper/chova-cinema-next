@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { client } from '.';
 import { Casting, MovieDetail, MovieDetailPageData, SpecialScreen, Trailer } from './types';
 
 export const queryMovieDetailPageData = async (movieCode: string) => {
@@ -8,10 +8,10 @@ export const queryMovieDetailPageData = async (movieCode: string) => {
     },
     { data: specialScreen },
   ] = await Promise.all([
-    axios.get<{ movieDetail: MovieDetail; casting: Casting[]; trailer: Trailer[] }>(
-      `${process.env.NEXT_PUBLIC_API_SERVER_BASE_URL}/api/movies/${movieCode}`,
+    client.get<{ movieDetail: MovieDetail; casting: Casting[]; trailer: Trailer[] }>(
+      `/movies/${movieCode}`,
     ),
-    axios.get<SpecialScreen[]>(`${process.env.NEXT_PUBLIC_API_SERVER_BASE_URL}/api/specials`),
+    client.get<SpecialScreen[]>(`/specials`),
   ]);
 
   const carouselItems = trailer

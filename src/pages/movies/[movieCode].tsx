@@ -1,10 +1,10 @@
 import Carousel from '@/components/Carousel';
 import Layout from '@/components/Layout';
 import MovieDetailHead from '@/components/MovieDetailHead';
+import { client, createQueryKey } from '@/query';
 import { queryMovieDetailPageData } from '@/query/movieDetailPageData';
 import { Movie } from '@/query/types';
 import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -16,9 +16,7 @@ type PathParams = {
 };
 
 export const getStaticPaths: GetStaticPaths<PathParams> = async () => {
-  const { data: movies } = await axios.get<Movie[]>(
-    `${process.env.NEXT_PUBLIC_API_SERVER_BASE_URL}/api/movies`,
-  );
+  const { data: movies } = await client.get<Movie[]>(`/movies`);
 
   const paths = movies.map((item) => ({ params: { movieCode: item.RepresentationMovieCode } }));
 
@@ -38,7 +36,7 @@ export const getStaticProps: GetStaticProps<
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: [`pages/movies`, movieCode],
+    queryKey: createQueryKey({ queryType: 'MOVIES_DETAIL_PAGE_DATA', params: { movieCode } }),
     queryFn: () => queryMovieDetailPageData(movieCode),
   });
 
@@ -54,7 +52,10 @@ export default function MovieDetailPage() {
   const { movieCode } = router.query;
 
   const { data, isSuccess } = useQuery({
-    queryKey: [`pages/movies`, movieCode],
+    queryKey: createQueryKey({
+      queryType: 'MOVIES_DETAIL_PAGE_DATA',
+      params: { movieCode: movieCode as string },
+    }),
     queryFn: () => queryMovieDetailPageData(movieCode as string),
     enabled: Boolean(movieCode),
   });

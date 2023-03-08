@@ -2,6 +2,7 @@ import Carousel from '@/components/Carousel';
 import Exhibition from '@/components/Exhibition';
 import Layout from '@/components/Layout';
 import TopMovies from '@/components/TopMovies';
+import { createQueryKey } from '@/query';
 import { queryMoviesPageData } from '@/query/moviesPageData';
 import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
 import { GetStaticProps } from 'next';
@@ -14,7 +15,7 @@ export const getStaticProps: GetStaticProps<{
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ['pages/movies'],
+    queryKey: createQueryKey({ queryType: 'MOVIES_PAGE_DATA' }),
     queryFn: queryMoviesPageData,
   });
 
@@ -27,7 +28,7 @@ export const getStaticProps: GetStaticProps<{
 
 export default function MoviesPage() {
   const { data } = useQuery({
-    queryKey: ['pages/movies'],
+    queryKey: createQueryKey({ queryType: 'MOVIES_PAGE_DATA' }),
     queryFn: queryMoviesPageData,
   });
 

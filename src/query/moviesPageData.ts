@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { client } from '.';
 import { CarouselItem, CarouselQuery, Movie, MoviesPageData, MoviesQuery } from './types';
 
 export const queryMoviesPageData = async () => {
@@ -15,19 +15,19 @@ export const queryMoviesPageData = async () => {
     { data: arteMovies },
     { data: operaMovies },
   ] = await Promise.all([
-    axios.get<CarouselItem[]>(`${process.env.NEXT_PUBLIC_API_SERVER_BASE_URL}/api/carousel`, {
+    client.get<CarouselItem[]>(`/carousel`, {
       params: carouselQuery,
     }),
-    axios.get<Movie[]>(`${process.env.NEXT_PUBLIC_API_SERVER_BASE_URL}/api/movies`, {
+    client.get<Movie[]>(`/movies`, {
       params: currentMoviesQuery,
     }),
-    axios.get<Movie[]>(`${process.env.NEXT_PUBLIC_API_SERVER_BASE_URL}/api/movies`, {
+    client.get<Movie[]>(`/movies`, {
       params: preMoviesQuery,
     }),
-    axios.get<Movie[]>(`${process.env.NEXT_PUBLIC_API_SERVER_BASE_URL}/api/movies`, {
+    client.get<Movie[]>(`/movies`, {
       params: arteMoviesQuery,
     }),
-    axios.get<Movie[]>(`${process.env.NEXT_PUBLIC_API_SERVER_BASE_URL}/api/movies`, {
+    client.get<Movie[]>(`/movies`, {
       params: operaMoviesQuery,
     }),
   ]);

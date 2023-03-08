@@ -6,6 +6,7 @@ import Layout from '@/components/Layout';
 import MovieCardList from '@/components/MovieCardList';
 import { queryHomePageData } from '@/query/homePageData';
 import { HomePageData } from '@/query/types';
+import { createQueryKey } from '@/query';
 
 // TODO: SSG or ISR
 export const getStaticProps: GetStaticProps<{
@@ -14,7 +15,7 @@ export const getStaticProps: GetStaticProps<{
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ['pages/home'],
+    queryKey: createQueryKey({ queryType: 'HOME_PAGE_DATA' }),
     queryFn: queryHomePageData,
   });
 
@@ -33,7 +34,7 @@ export default function HomePage({ data }: HomePageProps) {
   const {
     data: { carouselItems, movies },
   } = useQuery({
-    queryKey: ['pages/home'],
+    queryKey: createQueryKey({ queryType: 'HOME_PAGE_DATA' }),
     queryFn: queryHomePageData,
     initialData: data,
   });
