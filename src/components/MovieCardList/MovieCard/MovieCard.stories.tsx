@@ -18,6 +18,8 @@ export const Primary = Template.bind({});
 Primary.args = {
   theme: 'light',
   number: 1,
+  ticketingPath: '/ticketing',
+  movieDetailPath: '/movies/16119',
   movie: {
     RepresentationMovieCode: '16119',
     MoviePlayYN: 'Y',

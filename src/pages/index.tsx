@@ -1,15 +1,14 @@
-import { GetServerSideProps, GetStaticProps } from 'next';
+import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
 import Carousel from '@/components/Carousel';
 import Layout from '@/components/Layout';
 import MovieCardList from '@/components/MovieCardList';
-import { useRouter } from 'next/router';
 import { queryHomePageData } from '@/query/homePageData';
 import { HomePageData } from '@/query/types';
 
 // TODO: SSG or ISR
-export const getStaticProps: GetServerSideProps<{
+export const getStaticProps: GetStaticProps<{
   dehydratedState: DehydratedState;
 }> = async () => {
   const queryClient = new QueryClient();
@@ -31,8 +30,6 @@ interface HomePageProps {
 }
 
 export default function HomePage({ data }: HomePageProps) {
-  const { push } = useRouter();
-
   const {
     data: { carouselItems, movies },
   } = useQuery({
@@ -40,14 +37,6 @@ export default function HomePage({ data }: HomePageProps) {
     queryFn: queryHomePageData,
     initialData: data,
   });
-
-  const moveTicketingPage = () => {
-    push('/ticketing');
-  };
-
-  const moveMovieDetailPage = (movieCode: string) => {
-    push(`/movies/${movieCode}`);
-  };
 
   return (
     <>
@@ -65,8 +54,8 @@ export default function HomePage({ data }: HomePageProps) {
               theme="dark"
               movies={movies}
               showNum={5}
-              onTicketingClick={moveTicketingPage}
-              onDetailClick={moveMovieDetailPage}
+              ticketingPath="/ticketing"
+              movieDetailBasePath="/movies"
             />
           </div>
         </section>

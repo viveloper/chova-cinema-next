@@ -10,18 +10,9 @@ interface Props {
   showNum: number;
   movies: Movie[];
   onMoreClick: () => void;
-  onTicketingClick: MovieCardListProps['onTicketingClick'];
-  onDetailClick: MovieCardListProps['onDetailClick'];
 }
 
-const TopMovies = ({
-  title,
-  showNum,
-  movies,
-  onMoreClick,
-  onTicketingClick,
-  onDetailClick,
-}: Props) => {
+const TopMovies = ({ title, showNum, movies, onMoreClick }: Props) => {
   const handleMoreClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     onMoreClick();
@@ -40,8 +31,8 @@ const TopMovies = ({
         movies={movies}
         showNum={showNum}
         theme="light"
-        onTicketingClick={onTicketingClick}
-        onDetailClick={onDetailClick}
+        ticketingPath="/ticketing"
+        movieDetailBasePath="/movies"
       />
     </div>
   );

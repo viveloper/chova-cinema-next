@@ -9,32 +9,20 @@ export interface Props {
   movie: Movie;
   number: number;
   theme: Theme;
-  onTicketingClick: () => void;
-  onDetailClick: (movieCode: string) => void;
+  ticketingPath: string;
+  movieDetailPath: string;
 }
 
 // TODO: SCSS를 사용하거나 CSS in JS 사용해서 리팩토링
-const MovieCard = ({ movie, number, theme, onTicketingClick, onDetailClick }: Props) => {
-  const handleTicketingClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    onTicketingClick();
-  };
-  const handleDetailClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    onDetailClick(movie.RepresentationMovieCode);
-  };
+const MovieCard = ({ movie, number, theme, ticketingPath, movieDetailPath }: Props) => {
   return (
     <div className={`${classes.card} ${theme === 'light' ? classes.light : ''}`}>
       <div className={classes.imgContainer}>
         <Image src={movie.PosterURL} alt="poster" fill sizes="184px" />
         <em className={classes.index}>{number}</em>
         <div className={classes.hoverLayer}>
-          <Link href="" onClick={handleTicketingClick}>
-            예매하기
-          </Link>
-          <Link href="" onClick={handleDetailClick}>
-            상세정보
-          </Link>
+          <Link href={ticketingPath}>예매하기</Link>
+          <Link href={movieDetailPath}>상세정보</Link>
         </div>
       </div>
       <div className={classes.info}>

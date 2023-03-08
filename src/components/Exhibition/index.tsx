@@ -46,8 +46,8 @@ const Exhibition = ({
           movies={movies}
           showNum={1}
           theme="light"
-          onTicketingClick={() => null}
-          onDetailClick={() => null}
+          ticketingPath="/ticketing"
+          movieDetailBasePath="/movies"
         />
       ) : (
         <div className={classes.commingSoon}>

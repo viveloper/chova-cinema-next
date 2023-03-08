@@ -6,7 +6,6 @@ import { queryMoviesPageData } from '@/query/moviesPageData';
 import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 
 // TODO: SSG or ISR
 export const getStaticProps: GetStaticProps<{
@@ -27,8 +26,6 @@ export const getStaticProps: GetStaticProps<{
 };
 
 export default function MoviesPage() {
-  const { push } = useRouter();
-
   const { data } = useQuery({
     queryKey: ['pages/movies'],
     queryFn: queryMoviesPageData,
@@ -37,14 +34,6 @@ export default function MoviesPage() {
   const moveSubMoviesPage = (subType: 'current' | 'pre') => {
     // TODO: 상영 중인 영화 목록 / 상영 예정인 영화 목록 페이지 라우트
     // push(`/movies/${subType}`);
-  };
-
-  const moveTicketingPage = () => {
-    push('/ticketing');
-  };
-
-  const moveMovieDetailPage = (movieCode: string) => {
-    push(`/movies/${movieCode}`);
   };
 
   return (
@@ -64,8 +53,6 @@ export default function MoviesPage() {
               showNum={5}
               movies={data?.currentMovies ?? []}
               onMoreClick={() => moveSubMoviesPage('current')}
-              onTicketingClick={moveTicketingPage}
-              onDetailClick={moveMovieDetailPage}
             />
           </section>
           <section style={{ marginTop: '16px' }}>
@@ -74,8 +61,6 @@ export default function MoviesPage() {
               showNum={5}
               movies={data?.preMovies ?? []}
               onMoreClick={() => moveSubMoviesPage('pre')}
-              onTicketingClick={moveTicketingPage}
-              onDetailClick={moveMovieDetailPage}
             />
           </section>
           <section

@@ -9,11 +9,11 @@ export interface Props {
   theme: Theme;
   movies: Movie[];
   showNum: number;
-  onTicketingClick: MovieCardProps['onTicketingClick'];
-  onDetailClick: MovieCardProps['onDetailClick'];
+  ticketingPath: string;
+  movieDetailBasePath: string;
 }
 
-const MovieCardList = ({ theme, movies, showNum, onTicketingClick, onDetailClick }: Props) => {
+const MovieCardList = ({ theme, movies, showNum, ticketingPath, movieDetailBasePath }: Props) => {
   const [startActiveIndex, setStartActiveIndex] = useState(0);
 
   const handlePrevClick = () => {
@@ -59,8 +59,8 @@ const MovieCardList = ({ theme, movies, showNum, onTicketingClick, onDetailClick
                 movie={movie}
                 number={index + 1}
                 theme={theme}
-                onTicketingClick={onTicketingClick}
-                onDetailClick={onDetailClick}
+                ticketingPath={ticketingPath}
+                movieDetailPath={`${movieDetailBasePath}/${movie.RepresentationMovieCode}`}
               />
             </li>
           ))}
