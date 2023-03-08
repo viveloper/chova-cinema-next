@@ -1,27 +1,27 @@
 import React from 'react';
 import Image from 'next/image';
-import MovieDetailTitle from '../MovieDetailTitle';
-import MovieDetailStatistics from '../MovieDetailStatistics';
-import MovieDetailSummary from '../MovieDetailSummary';
-import MovieDetailSpecialScreen from '../MovieDetailSpecialScreen';
-import MovieDetailAsideButtons from '../MovieDetailAsideButtons';
+import MovieDetailTitle from './MovieDetailTitle';
+import MovieDetailStatistics from './MovieDetailStatistics';
+import MovieDetailSummary from './MovieDetailSummary';
+import MovieDetailSpecialScreen from './MovieDetailSpecialScreen';
+import MovieDetailAsideButtons from './MovieDetailAsideButtons';
 import { Casting, MovieDetail, SpecialScreen } from '@/query/types';
 
 interface MovieDetailHeadProps {
   movieDetail: MovieDetail;
   casting: Casting[];
   specialScreen: SpecialScreen[];
-  onTicketingClick: () => void;
+  ticketingPath: string;
 }
 
 const MovieDetailHead = ({
   movieDetail,
   casting,
   specialScreen,
-  onTicketingClick,
+  ticketingPath,
 }: MovieDetailHeadProps) => {
   return (
-    <div style={{ position: 'relative', minHeight: '240px', paddingLeft: '245px' }}>
+    <div style={{ position: 'relative', minHeight: '240px', paddingLeft: '245px', width: '980px' }}>
       <Image
         src={movieDetail.PosterURL}
         alt="poster"
@@ -43,10 +43,7 @@ const MovieDetailHead = ({
       <MovieDetailSummary movieDetail={movieDetail} casting={casting} />
       <MovieDetailSpecialScreen items={specialScreen} />
       <div style={{ position: 'absolute', right: 0, bottom: '10px' }}>
-        <MovieDetailAsideButtons
-          likeCount={movieDetail.LikeCount}
-          onTicketingClick={onTicketingClick}
-        />
+        <MovieDetailAsideButtons likeCount={movieDetail.LikeCount} ticketingPath={ticketingPath} />
       </div>
     </div>
   );

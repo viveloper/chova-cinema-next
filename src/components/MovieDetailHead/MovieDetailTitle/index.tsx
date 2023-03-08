@@ -1,5 +1,5 @@
+import ViewGradeIcon from '@/components/ViewGradeIcon';
 import { ViewGradeCode } from '@/query/types';
-import ViewGradeIcon from '../ViewGradeIcon';
 import classes from './MovieDetailTitle.module.css';
 
 interface MovieDetailTitleProps {

@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
 }
-.aside-menu button {
+.aside-menu button,
+.aside-menu a {
   background: transparent;
   border: none;
   outline: none;

@@ -1,3 +1,6 @@
+import { PosterProps } from '@/components/MovieDetailInfo/Poster';
+import { TrailerProps } from '@/components/MovieDetailInfo/Trailer';
+
 export type CarouselItem = {
   img: string;
   video?: string;
@@ -225,9 +228,10 @@ export type MoviesPageData = {
 };
 
 export type MovieDetailPageData = {
-  carouselItems: CarouselItem[];
   movieDetail: MovieDetail;
   casting: Casting[];
+  trailer: TrailerProps['items'];
+  poster: PosterProps['imageUrls'];
   specialScreen: SpecialScreen[];
 };
 

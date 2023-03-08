@@ -1,13 +1,14 @@
 import React from 'react';
 import numberWithCommas from '@/utils/numberWithCommas';
 import classes from './MovieDetailAsideButtons.module.css';
+import Link from 'next/link';
 
 interface MovieDetailAsideButtonsProps {
   likeCount: number;
-  onTicketingClick: () => void;
+  ticketingPath: string;
 }
 
-const MovieDetailAsideButtons = ({ likeCount, onTicketingClick }: MovieDetailAsideButtonsProps) => {
+const MovieDetailAsideButtons = ({ likeCount, ticketingPath }: MovieDetailAsideButtonsProps) => {
   return (
     <div className={classes['aside-menu']}>
       <button className={classes['btn-link']}>
@@ -17,9 +18,9 @@ const MovieDetailAsideButtons = ({ likeCount, onTicketingClick }: MovieDetailAsi
         <i className="far fa-heart"></i>
         <span className={classes['like-cnt']}>{numberWithCommas(likeCount)}</span>
       </button>
-      <button className={classes['btn-ticketing']} onClick={onTicketingClick}>
+      <Link className={classes['btn-ticketing']} href={ticketingPath}>
         예매하기
-      </button>
+      </Link>
     </div>
   );
 };

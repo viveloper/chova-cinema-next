@@ -11,15 +11,12 @@ export default {
   argTypes: {},
 } as ComponentMeta<typeof MovieDetailHead>;
 
-const Template: ComponentStory<typeof MovieDetailHead> = (args) => (
-  <div className="center">
-    <MovieDetailHead {...args} />
-  </div>
-);
+const Template: ComponentStory<typeof MovieDetailHead> = (args) => <MovieDetailHead {...args} />;
 
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
+  ticketingPath: '/ticketing',
   movieDetail: {
     MakingNationNameKR: '한국',
     MakingNationNameUS: '한국',

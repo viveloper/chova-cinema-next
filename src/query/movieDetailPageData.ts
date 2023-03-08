@@ -1,3 +1,4 @@
+import { TrailerProps } from '@/components/MovieDetailInfo/Trailer';
 import { client } from '.';
 import { Casting, MovieDetail, MovieDetailPageData, SpecialScreen, Trailer } from './types';
 
@@ -14,16 +15,23 @@ export const queryMovieDetailPageData = async (movieCode: string) => {
     client.get<SpecialScreen[]>(`/specials`),
   ]);
 
-  const carouselItems = trailer
-    .filter((item) => item.ImageDivisionCode === '1')
+  const movieTrailer = trailer
+    .filter((item) => item.ImageDivisionCode === '2' && Boolean(item.MediaURL))
     .map((item) => ({
-      img: item.ImageURL,
+      videoUrl: item.MediaURL,
+      imageUrl: item.ImageURL,
+      title: item.MediaTitle,
     }));
 
+  const poster = trailer
+    .filter((item) => item.ImageDivisionCode === '1' && Boolean(item.ImageURL))
+    .map((item) => item.ImageURL);
+
   const data: MovieDetailPageData = {
-    carouselItems,
     movieDetail,
     casting,
+    trailer: movieTrailer,
+    poster,
     specialScreen,
   };
 
