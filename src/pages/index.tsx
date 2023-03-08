@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, GetStaticProps } from 'next';
 import Head from 'next/head';
 import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
 import Carousel from '@/components/Carousel';
@@ -6,18 +6,17 @@ import Layout from '@/components/Layout';
 import MovieCardList from '@/components/MovieCardList';
 import { useRouter } from 'next/router';
 import { queryHomePageData } from '@/query/homePageData';
+import { HomePageData } from '@/query/types';
 
 // TODO: SSG or ISR
-export const getServerSideProps: GetServerSideProps<{
+export const getStaticProps: GetServerSideProps<{
   dehydratedState: DehydratedState;
-}> = async ({ res }) => {
-  res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
-
+}> = async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
     queryKey: ['pages/home'],
-    queryFn: () => queryHomePageData(),
+    queryFn: queryHomePageData,
   });
 
   return {
@@ -27,12 +26,19 @@ export const getServerSideProps: GetServerSideProps<{
   };
 };
 
-export default function HomePage() {
+interface HomePageProps {
+  data: HomePageData;
+}
+
+export default function HomePage({ data }: HomePageProps) {
   const { push } = useRouter();
 
-  const { data } = useQuery({
+  const {
+    data: { carouselItems, movies },
+  } = useQuery({
     queryKey: ['pages/home'],
-    queryFn: () => queryHomePageData(),
+    queryFn: queryHomePageData,
+    initialData: data,
   });
 
   const moveTicketingPage = () => {
@@ -52,12 +58,12 @@ export default function HomePage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout theme="dark">
-        <Carousel theme="dark" height={774} items={data?.carouselItems ?? []} />
+        <Carousel theme="dark" height={774} items={carouselItems} />
         <section style={{ backgroundColor: '#000', padding: '32px 0' }}>
           <div className="center">
             <MovieCardList
               theme="dark"
-              movies={data?.movies ?? []}
+              movies={movies}
               showNum={5}
               onTicketingClick={moveTicketingPage}
               onDetailClick={moveMovieDetailPage}

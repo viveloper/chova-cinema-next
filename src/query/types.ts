@@ -211,12 +211,12 @@ export type Trailer = {
   MediaTitle: string;
 };
 
-export type HomePageRes = {
+export type HomePageData = {
   carouselItems: CarouselItem[];
   movies: Movie[];
 };
 
-export type MoviesPageRes = {
+export type MoviesPageData = {
   carouselItems: CarouselItem[];
   currentMovies: Movie[];
   preMovies: Movie[];
@@ -224,7 +224,7 @@ export type MoviesPageRes = {
   operaMovies: Movie[];
 };
 
-export type MovieDetailPageRes = {
+export type MovieDetailPageData = {
   carouselItems: CarouselItem[];
   movieDetail: MovieDetail;
   casting: Casting[];

@@ -5,24 +5,24 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import '@/styles/globals.css';
 import ErrorScreen from '@/components/ErrorScreen';
 
-const isMSWEnabled =
-  process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_API_MOCKING_ENABLED === 'true';
-let isMSWReady = false;
+// const isMSWEnabled =
+//   process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_API_MOCKING_ENABLED === 'true';
+// let isMSWReady = false;
 
-const initMocks = async () => {
-  if (isMSWEnabled) {
-    if (typeof window !== 'undefined') {
-      const { worker } = await import('../mocks/browser');
-      worker.start();
-      isMSWReady = true;
-    } else {
-      const { server } = await import('../mocks/server');
-      server.listen();
-    }
-  }
-};
+// const initMocks = async () => {
+//   if (isMSWEnabled) {
+//     if (typeof window !== 'undefined') {
+//       const { worker } = await import('../mocks/browser');
+//       worker.start();
+//       isMSWReady = true;
+//     } else {
+//       const { server } = await import('../mocks/server');
+//       server.listen();
+//     }
+//   }
+// };
 
-initMocks();
+// initMocks();
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(
@@ -30,26 +30,27 @@ export default function App({ Component, pageProps }: AppProps) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            refetchOnMount: false,
+            // refetchOnMount: false,
             refetchOnWindowFocus: false,
             useErrorBoundary: true,
           },
         },
       }),
   );
-  const [ready, setReady] = useState(!isMSWEnabled);
 
-  useEffect(() => {
-    if (!isMSWEnabled) return;
-    const timer = setInterval(() => {
-      if (isMSWReady) {
-        setReady(true);
-        clearInterval(timer);
-      }
-    }, 100);
-  }, []);
+  // const [ready, setReady] = useState(!isMSWEnabled);
 
-  if (!ready) return <></>;
+  // useEffect(() => {
+  //   if (!isMSWEnabled) return;
+  //   const timer = setInterval(() => {
+  //     if (isMSWReady) {
+  //       setReady(true);
+  //       clearInterval(timer);
+  //     }
+  //   }, 100);
+  // }, []);
+
+  // if (!ready) return <></>;
 
   return (
     <QueryClientProvider client={queryClient}>

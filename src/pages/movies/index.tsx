@@ -4,21 +4,19 @@ import Layout from '@/components/Layout';
 import TopMovies from '@/components/TopMovies';
 import { queryMoviesPageData } from '@/query/moviesPageData';
 import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 // TODO: SSG or ISR
-export const getServerSideProps: GetServerSideProps<{
+export const getStaticProps: GetStaticProps<{
   dehydratedState: DehydratedState;
-}> = async ({ res }) => {
-  res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
-
+}> = async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
     queryKey: ['pages/movies'],
-    queryFn: () => queryMoviesPageData(),
+    queryFn: queryMoviesPageData,
   });
 
   return {
@@ -33,7 +31,7 @@ export default function MoviesPage() {
 
   const { data } = useQuery({
     queryKey: ['pages/movies'],
-    queryFn: () => queryMoviesPageData(),
+    queryFn: queryMoviesPageData,
   });
 
   const moveSubMoviesPage = (subType: 'current' | 'pre') => {
