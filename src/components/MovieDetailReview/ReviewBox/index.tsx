@@ -1,60 +1,45 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import classes from './ReviewBox.module.css';
 
-type Value = {
-  id?: number;
-  score: number;
-  text: string;
-};
-
 type Mode = 'add' | 'edit';
 
 export interface ReviewBoxProps {
   mode: Mode;
+  score: number;
+  text: string;
   maxLength: number;
-  initialValue?: Value;
-  onSubmit: ({ mode, value }: { mode: Mode; value: Value }) => void;
+  onScoreChange: (score: number) => void;
+  onTextChange: (text: string) => void;
+  onSubmit: ({ mode, score, text }: { mode: Mode; score: number; text: string }) => void;
 }
 
-const ReviewBox = ({ mode, maxLength, initialValue, onSubmit }: ReviewBoxProps) => {
-  const [value, setValue] = useState<Value>({
-    id: undefined,
-    text: '',
-    score: 10,
-  });
-
-  useEffect(() => {
-    if (initialValue) {
-      setValue(initialValue);
-    }
-  }, [initialValue]);
-
-  const handleStarOver = (score: number) => {
-    setValue((v) => ({ ...v, score }));
+const ReviewBox = ({
+  mode,
+  score,
+  text,
+  maxLength,
+  onScoreChange,
+  onTextChange,
+  onSubmit,
+}: ReviewBoxProps) => {
+  const handleScoreChange = (score: number) => {
+    onScoreChange(score);
   };
 
   const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
-    setValue((v) => ({ ...v, text }));
+    onTextChange(text);
   };
 
   const handleSubmit = () => {
-    onSubmit({
-      mode,
-      value,
-    });
-    setValue({
-      id: undefined,
-      text: '',
-      score: 10,
-    });
+    onSubmit({ mode, score, text });
   };
 
   return (
     <div className={classes['review-box']}>
       <div className={classes['score-box']}>
         <span className={classes['text-score']}>
-          <span className={classes['score']}>{value.score}</span> 점
+          <span className={classes['score']}>{score}</span> 점
         </span>
         <div className={classes['star-score']}>
           {Array(10)
@@ -63,9 +48,9 @@ const ReviewBox = ({ mode, maxLength, initialValue, onSubmit }: ReviewBoxProps) 
               <span
                 key={index}
                 className={classes['icon-star']}
-                onMouseOver={() => handleStarOver(index + 1)}
+                onMouseOver={() => handleScoreChange(index + 1)}
                 style={{
-                  color: `${index < value.score ? 'orange' : '#ccc'}`,
+                  color: `${index < score ? 'orange' : '#ccc'}`,
                 }}
               >
                 <i className="fas fa-star"></i>
@@ -75,13 +60,13 @@ const ReviewBox = ({ mode, maxLength, initialValue, onSubmit }: ReviewBoxProps) 
       </div>
       <div className={classes['text-box']}>
         <textarea
-          value={value.text}
+          value={text}
           onChange={handleTextChange}
           maxLength={maxLength}
           placeholder="평점 및 영화 관람평을 작성해주세요."
         ></textarea>
         <span className={classes['text-count-container']}>
-          <span className={classes['count']}>{value.text.length}</span>
+          <span className={classes['count']}>{text.length}</span>
           {` / ${maxLength}`}
         </span>
       </div>

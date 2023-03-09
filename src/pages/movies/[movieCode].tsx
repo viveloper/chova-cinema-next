@@ -56,7 +56,7 @@ export default function MovieDetailPage() {
 
   const [tabValue, setTabValue] = useState<'info' | 'review'>('info');
 
-  const { data, isSuccess } = useQuery({
+  const { data } = useQuery({
     queryKey: createQueryKey({
       queryType: 'MOVIES_DETAIL_PAGE_DATA',
       params: { movieCode: movieCode as string },
@@ -65,7 +65,7 @@ export default function MovieDetailPage() {
     enabled: Boolean(movieCode),
   });
 
-  if (!isSuccess) return <></>;
+  if (!data) return <></>;
 
   const { movieDetail, trailer, poster, casting, specialScreen } = data;
 
@@ -125,7 +125,7 @@ export default function MovieDetailPage() {
               castingItems={casting}
             />
           ) : (
-            <MovieDetailReview />
+            <MovieDetailReview movieCode={movieCode as string} />
           )}
         </div>
       </Layout>

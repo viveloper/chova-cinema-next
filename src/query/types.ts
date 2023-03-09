@@ -1,6 +1,12 @@
 import { PosterProps } from '@/components/MovieDetailInfo/Poster';
 import { TrailerProps } from '@/components/MovieDetailInfo/Trailer';
 
+export type QueryType =
+  | 'HOME_PAGE_DATA'
+  | 'MOVIES_PAGE_DATA'
+  | 'MOVIES_DETAIL_PAGE_DATA'
+  | 'MOVIE_REVIEW_DATA';
+
 export type CarouselItem = {
   img: string;
   video?: string;
@@ -252,6 +258,13 @@ export type MovieDetailPageData = {
   specialScreen: SpecialScreen[];
 };
 
+export type MovieReviewData = {
+  reviewList: Review[];
+  pageCount: number;
+  totalCount: number;
+  avgScore: number;
+};
+
 export type CarouselQuery = {
   use?: 'home' | 'movie';
 };
@@ -262,4 +275,12 @@ export type MoviesQuery = {
   limit?: number;
   type?: MovieType;
   playing?: 'Y' | 'N';
+};
+
+export type ReviewSortType = 'recent' | 'like';
+export type MovieReviewQuery = {
+  movieCode: string;
+  page: number;
+  count: number;
+  sortType: ReviewSortType;
 };
