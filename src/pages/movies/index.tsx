@@ -8,7 +8,7 @@ import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/rea
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 
-// TODO: ISR(Incremental Static Regeneration)
+// TODO: CSR(Client Side Rendering)
 
 export const getStaticProps: GetStaticProps<{
   dehydratedState: DehydratedState;

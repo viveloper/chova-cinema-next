@@ -26,17 +26,15 @@ function MovieDetailInfo({
   castingItems,
 }: MovieDetailInfoProps) {
   return (
-    <>
-      <div className={classes['container']}>
-        <div className={classes['flex-container']}>
-          <Synopsis synopsisHtml={synopsis} />
-          <Preference genderPrefer={prefer.genderPrefer} agePrefer={prefer.agePrefer} />
-        </div>
-        <Trailer items={trailerItems} />
-        <Poster imageUrls={posterUrls} />
-        <Casting items={castingItems} />
+    <section className={classes['container']}>
+      <div className={classes['flex-container']}>
+        <Synopsis synopsisHtml={synopsis} />
+        <Preference genderPrefer={prefer.genderPrefer} agePrefer={prefer.agePrefer} />
       </div>
-    </>
+      <Trailer items={trailerItems} />
+      <Poster imageUrls={posterUrls} />
+      <Casting items={castingItems} />
+    </section>
   );
 }
 

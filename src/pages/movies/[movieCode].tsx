@@ -14,8 +14,6 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-// TODO: ISR(Incremental Static Regeneration)
-
 type PathParams = {
   movieCode: string;
 };
@@ -106,30 +104,29 @@ export default function MovieDetailPage() {
               onClick={(tabValue) => setTabValue(tabValue as 'info' | 'review')}
             />
           </section>
-          <section>
-            {tabValue === 'info' ? (
-              <MovieDetailInfo
-                synopsis={movieDetail.SynopsisKR}
-                prefer={{
-                  genderPrefer: {
-                    manPrefer: Number(movieDetail.ManPrefer),
-                    womanPrefer: Number(movieDetail.WomanPrefer),
-                  },
-                  agePrefer: {
-                    agePrefer10: Number(movieDetail.AgePrefer10),
-                    agePrefer20: Number(movieDetail.AgePrefer20),
-                    agePrefer30: Number(movieDetail.AgePrefer30),
-                    agePrefer40: Number(movieDetail.AgePrefer40),
-                  },
-                }}
-                trailerItems={trailer}
-                posterUrls={poster}
-                castingItems={casting}
-              />
-            ) : (
-              <MovieDetailReview />
-            )}
-          </section>
+
+          {tabValue === 'info' ? (
+            <MovieDetailInfo
+              synopsis={movieDetail.SynopsisKR}
+              prefer={{
+                genderPrefer: {
+                  manPrefer: Number(movieDetail.ManPrefer),
+                  womanPrefer: Number(movieDetail.WomanPrefer),
+                },
+                agePrefer: {
+                  agePrefer10: Number(movieDetail.AgePrefer10),
+                  agePrefer20: Number(movieDetail.AgePrefer20),
+                  agePrefer30: Number(movieDetail.AgePrefer30),
+                  agePrefer40: Number(movieDetail.AgePrefer40),
+                },
+              }}
+              trailerItems={trailer}
+              posterUrls={poster}
+              castingItems={casting}
+            />
+          ) : (
+            <MovieDetailReview />
+          )}
         </div>
       </Layout>
     </>

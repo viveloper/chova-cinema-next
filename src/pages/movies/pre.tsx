@@ -2,7 +2,7 @@ import ComingSoon from '@/components/ComingSoon';
 import Layout from '@/components/Layout';
 import Head from 'next/head';
 
-// TODO: ISR(Incremental Static Regeneration)
+// TODO: CSR(Client Side Rendering)
 // TODO: 페이지네이션(더보기) API 활용
 export default function PreMoviesPage() {
   return (
