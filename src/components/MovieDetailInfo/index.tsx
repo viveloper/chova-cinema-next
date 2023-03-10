@@ -1,6 +1,6 @@
 import Casting, { CastingProps } from './Casting';
 import Poster, { PosterProps } from './Poster';
-import Preference, { PreferenceProps } from './Preference';
+import Preference from './Preference';
 import { AgePreferProps } from './Preference/AgePrefer';
 import { GenderPreferProps } from './Preference/GenderPrefer';
 import Synopsis, { SynopsisProps } from './Synopsis';

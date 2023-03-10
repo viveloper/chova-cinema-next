@@ -220,6 +220,15 @@ export type Trailer = {
   MediaTitle: string;
 };
 
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  reviewList: number;
+  reviewLikeList: number;
+  ticketingList: number;
+};
+
 export type Review = {
   ReviewID: number;
   MemberNo: number;
@@ -283,4 +292,15 @@ export type MovieReviewQuery = {
   page: number;
   count: number;
   sortType: ReviewSortType;
+};
+
+export type LoginRequestBody = {
+  email: string;
+  password: string;
+};
+
+export type LoginResponse = {
+  success: boolean;
+  token: string;
+  user: User;
 };

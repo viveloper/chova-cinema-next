@@ -1,4 +1,3 @@
-import numberWithCommas from '@/utils/numberWithCommas';
 import clsx from 'clsx';
 import classes from './Tabs.module.css';
 
