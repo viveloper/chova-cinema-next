@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Review, ReviewSortType } from '@/query/types';
 import numberWithCommas from '@/utils/numberWithCommas';
 import classes from './ReviewList.module.css';
@@ -8,11 +7,13 @@ import serveyIcon03 from './assets/ic_survey_03.png';
 import serveyIcon04 from './assets/ic_survey_04.png';
 import serveyIcon05 from './assets/ic_survey_05.png';
 import Image from 'next/image';
+import { ThreeDots } from 'react-loader-spinner';
 
 export interface ReviewListProps {
   list: Review[];
   totalCount: number;
   sortType: ReviewSortType;
+  isFetching?: boolean;
   onSortTypeChange: (sortType: ReviewSortType) => void;
   onDelete: (reviewId: number) => void;
   onEdit: (reviewId: number) => void;
@@ -30,6 +31,7 @@ const ReviewList = ({
   list,
   totalCount,
   sortType,
+  isFetching = false,
   onMoreShow,
   onSortTypeChange,
   onDelete,
@@ -138,7 +140,21 @@ const ReviewList = ({
           className={classes['btn-more']}
           onClick={() => onMoreShow({ sortType, currentCount: list.length })}
         >
-          펼쳐보기 <i className="fas fa-angle-down"></i>
+          {isFetching ? (
+            <ThreeDots
+              height="24"
+              width="24"
+              radius="9"
+              color="grey"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{ display: 'inline-block', width: 'fit-content' }}
+              visible={true}
+            />
+          ) : (
+            <span>
+              펼쳐보기 <i className="fas fa-angle-down"></i>
+            </span>
+          )}
         </button>
       ) : null}
     </div>

@@ -120,6 +120,7 @@
   background: transparent;
   outline: none;
   width: 100%;
+  height: 40px;
   border: 1px solid #ddd;
   padding: 8px 0;
   cursor: pointer;
