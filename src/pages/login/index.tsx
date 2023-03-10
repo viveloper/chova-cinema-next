@@ -2,11 +2,8 @@ import { FormEvent, useEffect, useState } from 'react';
 import Head from 'next/head';
 import styled from '@emotion/styled';
 import Layout from '@/components/Layout';
-import { client } from '@/query';
-import { LoginResponse } from '@/query/types';
-import axios, { AxiosError } from 'axios';
-import { useRouter } from 'next/router';
 import { RotatingLines } from 'react-loader-spinner';
+import useAuth from '@/hooks/useAuth';
 
 interface LoginProps {}
 
@@ -14,38 +11,15 @@ const TEST_USER_EMAIL = process.env.NEXT_PUBLIC_TEST_USER_EMAIL;
 const TEST_USER_PASSWORD = process.env.NEXT_PUBLIC_TEST_USER_PASSWORD;
 
 function Login({}: LoginProps) {
-  const router = useRouter();
+  const { isLoginLoading, loginErrorMessage, login } = useAuth();
 
   // TODO: input validation 고도화
   const [email, setEmail] = useState(TEST_USER_EMAIL ?? '');
   const [password, setPassword] = useState(TEST_USER_PASSWORD ?? '');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      setIsLoading(true);
-      const { data } = await client.post<LoginResponse>('/auth/login', {
-        email,
-        password,
-      });
-      client.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
-      setErrorMessage('');
-      // TODO: 메인 페이지 or 이전 페이지로 이동
-      router.push('/');
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          setErrorMessage(error.response.data.message ?? '');
-        } else {
-          setErrorMessage(error.message);
-        }
-      } else {
-        // Just a stock error
-      }
-      setIsLoading(false);
-    }
+    login({ email, password });
   };
 
   return (
@@ -58,7 +32,7 @@ function Login({}: LoginProps) {
       </Head>
       <Layout>
         <LoginBlock>
-          {isLoading && (
+          {isLoginLoading && (
             <LoadingWrapper>
               <RotatingLines
                 strokeColor="#f45866"
@@ -91,7 +65,7 @@ function Login({}: LoginProps) {
                 </div>
                 <button type="submit">로그인</button>
               </form>
-              {errorMessage && <p className="error-message">{errorMessage}</p>}
+              {loginErrorMessage && <p className="error-message">{loginErrorMessage}</p>}
             </div>
           </LoginFormBlock>
         </LoginBlock>

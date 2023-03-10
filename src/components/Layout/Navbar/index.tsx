@@ -9,6 +9,13 @@ interface Props {
 }
 
 const Navbar = ({ theme = 'light', isLogin = false, onLogout }: Props) => {
+  const handleLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (onLogout) {
+      onLogout();
+    }
+  };
+
   return (
     <header className={`${classes.header} ${theme === 'light' ? `${classes.light}` : ''}`}>
       <div className="center">
@@ -45,7 +52,7 @@ const Navbar = ({ theme = 'light', isLogin = false, onLogout }: Props) => {
               {!isLogin ? (
                 <Link href="/login">로그인</Link>
               ) : (
-                <Link href="/" onClick={onLogout}>
+                <Link href="/" onClick={handleLogout}>
                   로그아웃
                 </Link>
               )}

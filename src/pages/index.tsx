@@ -8,8 +8,6 @@ import { queryHomePageData } from '@/query/homePageData';
 import { HomePageData } from '@/query/types';
 import { createQueryKey } from '@/query';
 
-// TODO: Static Site Generation (SSG)
-
 export const getStaticProps: GetStaticProps<{
   dehydratedState: DehydratedState;
 }> = async () => {

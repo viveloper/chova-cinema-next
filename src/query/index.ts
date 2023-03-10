@@ -1,9 +1,13 @@
 import axios from 'axios';
+import { isBrowser } from '@/utils/checkRuntimeEnv';
 import { QueryType, ReviewSortType } from './types';
+
+const token = isBrowser ? localStorage.getItem('token') : null;
 
 export const client = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_SERVER_BASE_URL,
 });
+client.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
 export const createQueryKey = ({
   queryType,

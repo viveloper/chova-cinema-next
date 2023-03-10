@@ -1,3 +1,4 @@
+import useAuth from '@/hooks/useAuth';
 import { ReactNode } from 'react';
 import { Theme } from '../types';
 import Footer from './Footer';
@@ -9,10 +10,10 @@ interface Props {
 }
 
 const Layout = ({ children, theme = 'light' }: Props) => {
-  const logout = () => {};
+  const { isLogin, logout } = useAuth();
   return (
     <>
-      <Navbar theme={theme} isLogin={false} onLogout={logout} />
+      <Navbar theme={theme} isLogin={isLogin} onLogout={logout} />
       <main>{children}</main>
       <Footer />
     </>

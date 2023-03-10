@@ -4,6 +4,7 @@ import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query
 import ErrorBoundary from '@/components/ErrorBoundary';
 import '@/styles/globals.css';
 import ErrorScreen from '@/components/ErrorScreen';
+import { RecoilRoot } from 'recoil';
 
 // const isMSWEnabled =
 //   process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_API_MOCKING_ENABLED === 'true';
@@ -53,12 +54,14 @@ export default function App({ Component, pageProps }: AppProps) {
   // if (!ready) return <></>;
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <ErrorBoundary fallback={<ErrorScreen />}>
-          <Component {...pageProps} />
-        </ErrorBoundary>
-      </Hydrate>
-    </QueryClientProvider>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <ErrorBoundary fallback={<ErrorScreen />}>
+            <Component {...pageProps} />
+          </ErrorBoundary>
+        </Hydrate>
+      </QueryClientProvider>
+    </RecoilRoot>
   );
 }
