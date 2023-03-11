@@ -5,7 +5,8 @@ export type QueryType =
   | 'HOME_PAGE_DATA'
   | 'MOVIES_PAGE_DATA'
   | 'MOVIES_DETAIL_PAGE_DATA'
-  | 'MOVIE_REVIEW_DATA';
+  | 'MOVIE_REVIEW_DATA'
+  | 'MOVIE_REVIEW_INFINITE_DATA';
 
 export type CarouselItem = {
   img: string;

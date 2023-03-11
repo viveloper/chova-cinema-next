@@ -6,6 +6,7 @@ import MovieDetailReview from '@/components/MovieDetailReview';
 import Tabs from '@/components/Tabs';
 import { client, createQueryKey } from '@/query';
 import { queryMovieDetailPageData } from '@/query/movieDetailPageData';
+import { queryMovieReviewData } from '@/query/movieReviewData';
 import { Movie } from '@/query/types';
 import numberWithCommas from '@/utils/numberWithCommas';
 import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
@@ -39,7 +40,7 @@ export const getStaticProps: GetStaticProps<
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: createQueryKey({ queryType: 'MOVIES_DETAIL_PAGE_DATA', params: { movieCode } }),
+    queryKey: createQueryKey({ queryType: 'MOVIES_DETAIL_PAGE_DATA', options: { movieCode } }),
     queryFn: () => queryMovieDetailPageData(movieCode),
   });
 
@@ -52,22 +53,42 @@ export const getStaticProps: GetStaticProps<
 
 export default function MovieDetailPage() {
   const router = useRouter();
-  const { movieCode } = router.query;
+  const movieCode = router.query.movieCode as string;
 
   const [tabValue, setTabValue] = useState<'info' | 'review'>('info');
 
-  const { data } = useQuery({
+  const { data: movieDetailData } = useQuery({
     queryKey: createQueryKey({
       queryType: 'MOVIES_DETAIL_PAGE_DATA',
-      params: { movieCode: movieCode as string },
+      options: { movieCode },
     }),
-    queryFn: () => queryMovieDetailPageData(movieCode as string),
+    queryFn: () => queryMovieDetailPageData(movieCode),
     enabled: Boolean(movieCode),
   });
 
-  if (!data) return <></>;
+  const { data: movieReviewData } = useQuery({
+    queryKey: createQueryKey({
+      queryType: 'MOVIE_REVIEW_DATA',
+      options: {
+        movieCode,
+        reviewPage: 1,
+        reviewCount: 1,
+        reviewSortType: 'recent',
+      },
+    }),
+    queryFn: () =>
+      queryMovieReviewData({
+        movieCode,
+        page: 1,
+        count: 1,
+        sortType: 'recent',
+      }),
+    enabled: Boolean(movieCode),
+  });
 
-  const { movieDetail, trailer, poster, casting, specialScreen } = data;
+  if (!movieDetailData) return <></>;
+
+  const { movieDetail, trailer, poster, casting, specialScreen } = movieDetailData;
 
   return (
     <>
@@ -97,7 +118,9 @@ export default function MovieDetailPage() {
                   value: 'info',
                 },
                 {
-                  name: `평점 및 관람평 (${numberWithCommas(1405)})`, // TODO: data.movieReview.ReviewCounts.TotalReviewCount
+                  name: `평점 및 관람평${
+                    movieReviewData ? ` (${numberWithCommas(movieReviewData.totalCount)})` : ''
+                  }`,
                   value: 'review',
                 },
               ]}

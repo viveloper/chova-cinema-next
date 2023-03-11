@@ -20,8 +20,8 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
 
   const { data, fetchNextPage, isLoading, isFetchingNextPage } = useInfiniteQuery({
     queryKey: createQueryKey({
-      queryType: 'MOVIE_REVIEW_DATA',
-      params: {
+      queryType: 'MOVIE_REVIEW_INFINITE_DATA',
+      options: {
         movieCode,
         reviewSortType: sortType,
       },

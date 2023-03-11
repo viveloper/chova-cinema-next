@@ -20,6 +20,7 @@ export const Primary = Template.bind({});
 Primary.args = {
   totalCount: 705,
   sortType: 'recent',
+  isFetchingNextPage: false,
   list: [
     {
       ReviewID: 829644938,

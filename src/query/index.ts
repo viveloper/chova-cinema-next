@@ -11,10 +11,10 @@ client.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
 export const createQueryKey = ({
   queryType,
-  params,
+  options,
 }: {
   queryType: QueryType;
-  params?: {
+  options?: {
     movieCode?: string;
     reviewPage?: number;
     reviewCount?: number;
@@ -27,14 +27,15 @@ export const createQueryKey = ({
     case 'MOVIES_PAGE_DATA':
       return ['pages/movies', 'main'];
     case 'MOVIES_DETAIL_PAGE_DATA':
-      return ['pages/movies', params?.movieCode];
+      return ['pages/movies', options?.movieCode];
     case 'MOVIE_REVIEW_DATA':
+    case 'MOVIE_REVIEW_INFINITE_DATA':
       return [
         'review',
-        params?.movieCode,
-        params?.reviewPage,
-        params?.reviewCount,
-        params?.reviewSortType,
+        options?.movieCode,
+        options?.reviewPage,
+        options?.reviewCount,
+        options?.reviewSortType,
       ];
     default:
       return [];
