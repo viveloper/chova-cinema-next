@@ -13,7 +13,7 @@ export interface ReviewListProps {
   list: Review[];
   totalCount: number;
   sortType: ReviewSortType;
-  isFetching?: boolean;
+  isFetchingNextPage?: boolean;
   onSortTypeChange: (sortType: ReviewSortType) => void;
   onDelete: (reviewId: number) => void;
   onEdit: (reviewId: number) => void;
@@ -31,7 +31,7 @@ const ReviewList = ({
   list,
   totalCount,
   sortType,
-  isFetching = false,
+  isFetchingNextPage = false,
   onMoreShow,
   onSortTypeChange,
   onDelete,
@@ -140,7 +140,7 @@ const ReviewList = ({
           className={classes['btn-more']}
           onClick={() => onMoreShow({ sortType, currentCount: list.length })}
         >
-          {isFetching ? (
+          {isFetchingNextPage ? (
             <ThreeDots
               height="24"
               width="24"

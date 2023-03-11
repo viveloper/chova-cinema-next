@@ -268,6 +268,7 @@ export type MovieDetailPageData = {
 };
 
 export type MovieReviewData = {
+  page: number;
   reviewList: Review[];
   pageCount: number;
   totalCount: number;

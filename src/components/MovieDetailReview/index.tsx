@@ -1,12 +1,11 @@
 import ReviewBox, { ReviewBoxProps } from './ReviewBox';
 import ScoreBox from './ScoreBox';
 import ReviewList, { ReviewListProps } from './ReviewList';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { createQueryKey } from '@/query';
 import { queryMovieReviewData } from '@/query/movieReviewData';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Review, ReviewSortType } from '@/query/types';
-import styled from '@emotion/styled';
 import { Grid as GridLoading } from 'react-loader-spinner';
 
 export interface MovieDetailReviewProps {
@@ -17,39 +16,37 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
   const [reviewBoxMode, setReviewBoxMode] = useState<ReviewBoxProps['mode']>('add');
   const [reviewBoxScore, setReviewBoxScore] = useState(10);
   const [reviewBoxText, setReviewBoxText] = useState('');
-  // const [reviewCount, setReviewCount] = useState(10);
-  const [reviewPage, setReviewPage] = useState(1);
   const [sortType, setSortType] = useState<ReviewSortType>('recent');
-  const [reviewList, setReivewList] = useState<Review[]>([]);
 
-  const { data, isLoading, isFetching } = useQuery({
+  const { data, fetchNextPage, isLoading, isFetchingNextPage } = useInfiniteQuery({
     queryKey: createQueryKey({
       queryType: 'MOVIE_REVIEW_DATA',
       params: {
         movieCode,
-        reviewPage,
-        reviewCount: 10,
         reviewSortType: sortType,
       },
     }),
-    queryFn: () =>
+    queryFn: ({ pageParam = 1 }) =>
       queryMovieReviewData({
         movieCode,
-        page: reviewPage,
+        page: pageParam,
         count: 10,
         sortType,
       }),
+    getNextPageParam: (lastPage, pages) => Number(lastPage.page) + 1,
     enabled: Boolean(movieCode),
-    onSuccess: (data) => {
-      setReivewList((v) => {
-        // console.log('prev', v);
-        // console.log('next', data.reviewList);
-        // console.log('merge', [...v, ...data.reviewList]);
-        return [...v, ...data.reviewList];
-      });
-    },
-    keepPreviousData: true,
   });
+
+  const reviewList = useMemo(() => {
+    if (!data) return [];
+    let reviewList: Review[] = [];
+    data.pages.forEach((page) => {
+      page.reviewList.forEach((review) => {
+        reviewList.push(review);
+      });
+    });
+    return reviewList;
+  }, [data]);
 
   const handleReviewSubmit: ReviewBoxProps['onSubmit'] = ({ mode, score, text }) => {
     // TODO: require login
@@ -127,7 +124,7 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
         <>
           <section style={{ margin: '32px 0' }}>
             <ScoreBox
-              score={data.avgScore}
+              score={data.pages[0].avgScore}
               totalScore={10}
               description={
                 <>
@@ -150,19 +147,15 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
           </section>
           <section style={{ margin: '55px 0 32px 0' }}>
             <ReviewList
-              totalCount={data.totalCount}
+              totalCount={data.pages[0].totalCount}
               list={reviewList}
               sortType={sortType}
-              isFetching={isFetching}
+              isFetchingNextPage={isFetchingNextPage}
               onDelete={handleReviewDelete}
               onEdit={handleReviewEdit}
               onLike={handleReviewLike}
-              onSortTypeChange={(sortType) => {
-                setReivewList([]);
-                setReviewPage(1);
-                setSortType(sortType);
-              }}
-              onMoreShow={() => setReviewPage((v) => v + 1)}
+              onSortTypeChange={(sortType) => setSortType(sortType)}
+              onMoreShow={() => fetchNextPage()}
             />
           </section>
         </>
@@ -170,13 +163,3 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
     </div>
   );
 }
-
-const LoadingWrapper = styled.div`
-  position: absolute;
-  min-height: 200px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
