@@ -1,16 +1,15 @@
+import { ReviewPostMode } from '@/query/types';
 import { useState, useEffect, ChangeEvent } from 'react';
 import classes from './ReviewBox.module.css';
 
-type Mode = 'add' | 'edit';
-
 export interface ReviewBoxProps {
-  mode: Mode;
+  mode: ReviewPostMode;
   score: number;
   text: string;
   maxLength: number;
   onScoreChange: (score: number) => void;
   onTextChange: (text: string) => void;
-  onSubmit: ({ mode, score, text }: { mode: Mode; score: number; text: string }) => void;
+  onSubmit: ({ mode, score, text }: { mode: ReviewPostMode; score: number; text: string }) => void;
 }
 
 const ReviewBox = ({

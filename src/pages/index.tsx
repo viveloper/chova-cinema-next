@@ -5,7 +5,6 @@ import Carousel from '@/components/Carousel';
 import Layout from '@/components/Layout';
 import MovieCardList from '@/components/MovieCardList';
 import { queryHomePageData } from '@/query/homePageData';
-import { HomePageData } from '@/query/types';
 import { createQueryKey } from '@/query';
 
 export const getStaticProps: GetStaticProps<{
@@ -25,17 +24,11 @@ export const getStaticProps: GetStaticProps<{
   };
 };
 
-interface HomePageProps {
-  data: HomePageData;
-}
-
-export default function HomePage({ data }: HomePageProps) {
-  const {
-    data: { carouselItems, movies },
-  } = useQuery({
+export default function HomePage() {
+  const { data } = useQuery({
     queryKey: createQueryKey({ queryType: 'HOME_PAGE_DATA' }),
     queryFn: queryHomePageData,
-    initialData: data,
+    // initialData: data,
   });
 
   return (
@@ -47,12 +40,12 @@ export default function HomePage({ data }: HomePageProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout theme="dark">
-        <Carousel theme="dark" height={774} items={carouselItems} />
+        <Carousel theme="dark" height={774} items={data?.carouselItems ?? []} />
         <section style={{ backgroundColor: '#000', padding: '32px 0' }}>
           <div className="center">
             <MovieCardList
               theme="dark"
-              movies={movies}
+              movies={data?.movies ?? []}
               showNum={5}
               ticketingPath="/ticketing"
               movieDetailBasePath="/movies"

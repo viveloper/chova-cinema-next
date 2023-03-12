@@ -27,7 +27,7 @@ export const createQueryKey = ({
     case 'MOVIES_PAGE_DATA':
       return ['pages/movies', 'main'];
     case 'MOVIES_DETAIL_PAGE_DATA':
-      return ['pages/movies', options?.movieCode];
+      return ['pages/movies', options?.movieCode].filter((item) => item !== undefined);
     case 'MOVIE_REVIEW_DATA':
     case 'MOVIE_REVIEW_INFINITE_DATA':
       return [
@@ -36,7 +36,9 @@ export const createQueryKey = ({
         options?.reviewPage,
         options?.reviewCount,
         options?.reviewSortType,
-      ];
+      ].filter((item) => item !== undefined);
+    case 'USER_DATA':
+      return ['user'];
     default:
       return [];
   }

@@ -83,14 +83,14 @@ const Navbar = ({ theme = 'light', isLogin = false, onLogout }: Props) => {
           <ul className={`${classes.menu} ${classes.menu3}`}>
             <li>
               {!isLogin ? (
-                <Link href="/signin">
+                <Link href="/signup">
                   <span>
                     <i className="fas fa-user"></i>
                   </span>{' '}
                   회원가입
                 </Link>
               ) : (
-                <Link href="/MyPage">
+                <Link href="/mypage">
                   <span>
                     <i className="fas fa-user"></i>
                   </span>{' '}

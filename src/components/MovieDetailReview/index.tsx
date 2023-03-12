@@ -1,22 +1,64 @@
 import ReviewBox, { ReviewBoxProps } from './ReviewBox';
 import ScoreBox from './ScoreBox';
 import ReviewList, { ReviewListProps } from './ReviewList';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { createQueryKey } from '@/query';
-import { queryMovieReviewData } from '@/query/movieReviewData';
+import {
+  addMovieReviewData,
+  deleteMovieReviewData,
+  editMovieReviewData,
+  queryMovieReviewData,
+} from '@/query/movieReviewData';
 import { useMemo, useState } from 'react';
 import { Review, ReviewSortType } from '@/query/types';
 import { Grid as GridLoading } from 'react-loader-spinner';
+import useAuth from '@/hooks/useAuth';
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import { useRecoilValue } from 'recoil';
+import { userState } from '@/store/auth';
 
 export interface MovieDetailReviewProps {
   movieCode: string;
 }
+
+// TODO: 에러 핸들링 모듈화 및 고도화
 
 export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps) {
   const [reviewBoxMode, setReviewBoxMode] = useState<ReviewBoxProps['mode']>('add');
   const [reviewBoxScore, setReviewBoxScore] = useState(10);
   const [reviewBoxText, setReviewBoxText] = useState('');
   const [sortType, setSortType] = useState<ReviewSortType>('recent');
+  const [edittingReviewId, setEdittingReviewId] = useState<number | null>(null);
+
+  const user = useRecoilValue(userState);
+
+  const queryClient = useQueryClient();
+  const { isLogin } = useAuth();
+  const router = useRouter();
+
+  const invalidateReviewQuery = () => {
+    queryClient.invalidateQueries({
+      queryKey: createQueryKey({
+        queryType: 'MOVIE_REVIEW_INFINITE_DATA',
+      }),
+    });
+  };
+
+  const invalidateUserQuery = () => {
+    queryClient.invalidateQueries({
+      queryKey: createQueryKey({
+        queryType: 'USER_DATA',
+      }),
+    });
+  };
+
+  const clearReviewBox = () => {
+    setReviewBoxMode('add');
+    setReviewBoxScore(10);
+    setReviewBoxText('');
+    setEdittingReviewId(null);
+  };
 
   const { data, fetchNextPage, isLoading, isFetchingNextPage } = useInfiniteQuery({
     queryKey: createQueryKey({
@@ -45,61 +87,130 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
         reviewList.push(review);
       });
     });
-    return reviewList;
-  }, [data]);
+    return !user
+      ? reviewList
+      : reviewList.map((item) =>
+          user.reviewLikeList.includes(item.ReviewID) ? { ...item, MemberRecommandYN: 'Y' } : item,
+        );
+  }, [data, user]);
+
+  const { mutate: addReview } = useMutation({
+    mutationFn: addMovieReviewData,
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          alert(error.response.data.message);
+        } else {
+          alert(error.message);
+        }
+      } else {
+        // Just a stock error
+      }
+    },
+    onSuccess: () => {
+      invalidateReviewQuery();
+      invalidateUserQuery();
+      clearReviewBox();
+    },
+  });
+
+  const { mutate: editReview } = useMutation({
+    mutationFn: editMovieReviewData,
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          alert(error.response.data.message);
+        } else {
+          alert(error.message);
+        }
+      } else {
+        // Just a stock error
+      }
+    },
+    onSuccess: () => {
+      invalidateReviewQuery();
+      invalidateUserQuery();
+      clearReviewBox();
+    },
+  });
+
+  const { mutate: deleteReview } = useMutation({
+    mutationFn: deleteMovieReviewData,
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          alert(error.response.data.message);
+        } else {
+          alert(error.message);
+        }
+      } else {
+        // Just a stock error
+      }
+    },
+    onSuccess: () => {
+      invalidateReviewQuery();
+      invalidateUserQuery();
+      clearReviewBox();
+    },
+  });
 
   const handleReviewSubmit: ReviewBoxProps['onSubmit'] = ({ mode, score, text }) => {
-    // TODO: require login
-    let isLogin = false;
+    // require login
     if (!isLogin) {
       if (window.confirm('로그인이 필요한 기능입니다. 로그인 하시겠습니까?')) {
-        // TODO: 로그인 페이지로 이동
-        console.log('move login page');
+        router.push('/login');
       }
       return;
     }
-    if (!text) return;
-
-    if (mode === 'add') {
-      // TODO: add api call
-      console.log('add review', { mode, score, text });
-    } else {
-      // TODO: edit api call
-      console.log('edit review', { mode, score, text });
+    if (!text) {
+      window.alert('내용을 입력하세요.');
+      return;
     }
 
-    // clear ReviewBox
-    setReviewBoxMode('add');
-    setReviewBoxScore(10);
-    setReviewBoxText('');
+    if (mode === 'add') {
+      addReview({ movieCode, score, text });
+    } else {
+      if (!edittingReviewId) return;
+      editReview({
+        reviewId: edittingReviewId,
+        data: { movieCode, score, text, toggleLike: false },
+      });
+    }
   };
 
   const handleReviewDelete: ReviewListProps['onDelete'] = (reviewId) => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
-      // TODO: delete api call
-      console.log('delete review', reviewId);
+      deleteReview({ reviewId, data: { movieCode } });
     }
   };
+
   const handleReviewEdit: ReviewListProps['onEdit'] = (reviewId) => {
     const targetReview = reviewList.find((item) => item.ReviewID === reviewId);
     if (!targetReview) return;
     setReviewBoxMode('edit');
     setReviewBoxScore(targetReview.Evaluation);
     setReviewBoxText(targetReview.ReviewText);
+    setEdittingReviewId(reviewId);
   };
+
   const handleReviewLike: ReviewListProps['onLike'] = (reviewId) => {
-    // TODO: require login
-    let isLogin = false;
     if (!isLogin) {
       if (window.confirm('로그인이 필요한 기능입니다. 로그인 하시겠습니까?')) {
-        // TODO: 로그인 페이지로 이동
-        console.log('move login page');
+        router.push('/login');
       }
       return;
     }
-
-    // TODO: like api call
-    console.log('like review', reviewId);
+    const targetReview = reviewList.find((item) => item.ReviewID === reviewId);
+    if (!targetReview) return;
+    editReview({
+      reviewId,
+      data: {
+        movieCode,
+        score: targetReview.Evaluation,
+        text: targetReview.ReviewText,
+        toggleLike: true,
+      },
+    });
   };
 
   return (

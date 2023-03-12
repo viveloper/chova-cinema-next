@@ -1,12 +1,17 @@
 import { PosterProps } from '@/components/MovieDetailInfo/Poster';
 import { TrailerProps } from '@/components/MovieDetailInfo/Trailer';
 
+export type ErrorResponse = {
+  message: string;
+};
+
 export type QueryType =
   | 'HOME_PAGE_DATA'
   | 'MOVIES_PAGE_DATA'
   | 'MOVIES_DETAIL_PAGE_DATA'
   | 'MOVIE_REVIEW_DATA'
-  | 'MOVIE_REVIEW_INFINITE_DATA';
+  | 'MOVIE_REVIEW_INFINITE_DATA'
+  | 'USER_DATA';
 
 export type CarouselItem = {
   img: string;
@@ -225,9 +230,9 @@ export type User = {
   id: string;
   name: string;
   email: string;
-  reviewList: number;
-  reviewLikeList: number;
-  ticketingList: number;
+  reviewList: number[];
+  reviewLikeList: number[];
+  ticketingList: number[];
 };
 
 export type Review = {
@@ -295,6 +300,21 @@ export type MovieReviewQuery = {
   count: number;
   sortType: ReviewSortType;
 };
+export type ReviewPostMode = 'add' | 'edit';
+export type MovieReviewPostData = {
+  movieCode: string;
+  score: number;
+  text: string;
+};
+export type MovieReviewPutData = {
+  movieCode: string;
+  score: number;
+  text: string;
+  toggleLike: boolean;
+};
+export type MovieReviewDeleteData = {
+  movieCode: string;
+};
 
 export type LoginRequestBody = {
   email: string;
@@ -302,7 +322,6 @@ export type LoginRequestBody = {
 };
 
 export type LoginResponse = {
-  success: boolean;
   token: string;
   user: User;
 };

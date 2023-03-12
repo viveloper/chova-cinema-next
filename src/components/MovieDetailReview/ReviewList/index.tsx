@@ -8,6 +8,8 @@ import serveyIcon04 from './assets/ic_survey_04.png';
 import serveyIcon05 from './assets/ic_survey_05.png';
 import Image from 'next/image';
 import { ThreeDots } from 'react-loader-spinner';
+import { useRecoilValue } from 'recoil';
+import { userState } from '@/store/auth';
 
 export interface ReviewListProps {
   list: Review[];
@@ -38,8 +40,7 @@ const ReviewList = ({
   onEdit,
   onLike,
 }: ReviewListProps) => {
-  // TODO: 로그인 유저 정보 획득
-  const user = { id: '104800109' };
+  const user = useRecoilValue(userState);
 
   const getServeyIcon = (score: number) => {
     if (score >= 9) {
@@ -81,7 +82,7 @@ const ReviewList = ({
               index === 0 || index === arr.length - 1 ? name + character : name + '*',
             '',
           );
-          const isOwn = item.MemberID === user.id;
+          const isOwn = item.MemberID === user?.id;
           return (
             <li
               key={item.ReviewID}
@@ -109,7 +110,6 @@ const ReviewList = ({
                 <span className={classes['recommend']} onClick={() => onLike(item.ReviewID)}>
                   <span
                     className={
-                      // TODO: 서버 기능 업데이트 필요
                       item.MemberRecommandYN === 'Y'
                         ? `${classes['icon-thumbs-up']} ${classes['liked']}`
                         : classes['icon-thumbs-up']
