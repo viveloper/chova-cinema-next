@@ -31,7 +31,8 @@
 
 - 서비스 : https://chova-cinema-next.vercel.app
 - 스토리북 : https://6405c80c29140ed0511a0535-howeqxaift.chromatic.com
-- API 서버 : https://chova-cinema-express.vercel.app
+- API 서버 (AWS) : http://ec2-3-238-149-181.compute-1.amazonaws.com:8000
+- API 서버 (Vercel): https://chova-cinema-express.vercel.app
 
 ## API 서버 레포
 
