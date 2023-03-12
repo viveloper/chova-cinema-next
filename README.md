@@ -6,7 +6,7 @@
 
 - 정적 타입 언어 사용 (TypeScript)
 - SSG, ISR, SSR, CSR 활용 (Next.js)
-- BFF 사용하여 프론트엔드 비즈니스 로직 개선 (Next.js API Routes)
+- 프론트엔드 비즈니스 로직 개선을 위한 백엔드 API 개선 작업 (Express.js)
 - 서버 데이터 관리 방식 변경 (TanStack Query)
 - 재사용성 증대를 위한 컴포넌트 리팩토링
 - 로딩 / 에러 핸들링 고도화
@@ -31,6 +31,11 @@
 
 - 서비스 : https://chova-cinema-next.vercel.app
 - 스토리북 : https://6405c80c29140ed0511a0535-howeqxaift.chromatic.com
+- API 서버 : https://chova-cinema-express.vercel.app
+
+## API 서버 레포
+
+> [chova-cinema-express](https://github.com/viveloper/chova-cinema-express)
 
 ## 실행
 
