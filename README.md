@@ -12,8 +12,6 @@
 - 로딩 / 에러 핸들링 고도화
 - 컴포넌트 스타일링 방식 개선
 - Storybook / API 모킹(MSW) 기반 개발
-- 배포 자동화 (Vercel)
-- 스토리북 배포 (Chromatic)
 
 ## 기술 스택 변경
 
@@ -29,10 +27,9 @@
 
 ## 배포
 
-- 서비스 : https://chova-cinema-next.vercel.app
+- 서비스 : http://ec2-3-238-149-181.compute-1.amazonaws.com:3000
 - 스토리북 : https://6405c80c29140ed0511a0535-howeqxaift.chromatic.com
-- API 서버 (AWS) : http://ec2-3-238-149-181.compute-1.amazonaws.com:8000
-- API 서버 (Vercel): https://chova-cinema-express.vercel.app
+- API 서버 : http://ec2-3-238-149-181.compute-1.amazonaws.com:8000
 
 ## API 서버 레포
 
