@@ -3,19 +3,12 @@ import { client } from '.';
 import { Casting, MovieDetail, MovieDetailPageData, SpecialScreen, Trailer } from './types';
 
 export const queryMovieDetailPageData = async (movieCode: string) => {
-  const [
-    {
-      data: { movieDetail, casting, trailer },
-    },
-    { data: specialScreen },
-  ] = await Promise.all([
-    client.get<{ movieDetail: MovieDetail; casting: Casting[]; trailer: Trailer[] }>(
-      `/movies/${movieCode}`,
-    ),
+  const [{ data: movieDetail }, { data: specialScreen }] = await Promise.all([
+    client.get<MovieDetail>(`/movies/${movieCode}`),
     client.get<SpecialScreen[]>(`/specials`),
   ]);
 
-  const movieTrailer = trailer
+  const trailer = movieDetail.trailer
     .filter((item) => item.ImageDivisionCode === '2' && Boolean(item.MediaURL))
     .map((item) => ({
       videoUrl: item.MediaURL,
@@ -23,14 +16,15 @@ export const queryMovieDetailPageData = async (movieCode: string) => {
       title: item.MediaTitle,
     }));
 
-  const poster = trailer
+  const poster = movieDetail.trailer
     .filter((item) => item.ImageDivisionCode === '1' && Boolean(item.ImageURL))
     .map((item) => item.ImageURL);
 
+  const { casting: _, trailer: __, ...movie } = movieDetail;
   const data: MovieDetailPageData = {
-    movieDetail,
-    casting,
-    trailer: movieTrailer,
+    movie,
+    casting: movieDetail.casting,
+    trailer,
     poster,
     specialScreen,
   };

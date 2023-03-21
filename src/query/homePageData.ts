@@ -3,7 +3,7 @@ import { CarouselItem, CarouselQuery, HomePageData, Movie, MoviesQuery } from '.
 
 export const queryHomePageData = async () => {
   const carouselQuery: CarouselQuery = { use: 'home' };
-  const moviesQuery: MoviesQuery = { type: 'general', limit: 10 };
+  const moviesQuery: MoviesQuery = { limit: 10 };
 
   const [{ data: carouselItems }, { data: movies }] = await Promise.all([
     client.get<CarouselItem[]>(`/carousel`, {

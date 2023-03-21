@@ -28,7 +28,6 @@ export default function HomePage() {
   const { data } = useQuery({
     queryKey: createQueryKey({ queryType: 'HOME_PAGE_DATA' }),
     queryFn: queryHomePageData,
-    // initialData: data,
   });
 
   return (
@@ -47,8 +46,8 @@ export default function HomePage() {
               theme="dark"
               movies={data?.movies ?? []}
               showNum={5}
-              ticketingPath="/ticketing"
-              movieDetailBasePath="/movies"
+              ticketingPagePath="/ticketing"
+              movieDetailPageBasePath="/movies"
             />
           </div>
         </section>

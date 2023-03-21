@@ -31,8 +31,8 @@ const TopMovies = ({ title, showNum, movies, onMoreClick }: Props) => {
         movies={movies}
         showNum={showNum}
         theme="light"
-        ticketingPath="/ticketing"
-        movieDetailBasePath="/movies"
+        ticketingPagePath="/ticketing"
+        movieDetailPageBasePath="/movies"
       />
     </div>
   );

@@ -22,7 +22,7 @@ type PathParams = {
 export const getStaticPaths: GetStaticPaths<PathParams> = async () => {
   const { data: movies } = await client.get<Movie[]>(`/movies`);
 
-  const paths = movies.map((item) => ({ params: { movieCode: item.RepresentationMovieCode } }));
+  const paths = movies.map((item) => ({ params: { movieCode: item.movieCode } }));
 
   return {
     paths,
@@ -88,7 +88,7 @@ export default function MovieDetailPage() {
 
   if (!movieDetailData) return <></>;
 
-  const { movieDetail, trailer, poster, casting, specialScreen } = movieDetailData;
+  const { movie, trailer, poster, casting, specialScreen } = movieDetailData;
 
   return (
     <>
@@ -103,10 +103,10 @@ export default function MovieDetailPage() {
         <div className="center">
           <section style={{ marginTop: '28px' }}>
             <MovieDetailHead
-              movieDetail={movieDetail}
+              movieDetail={movie}
               casting={casting}
               specialScreen={specialScreen}
-              ticketingPath="/ticketing"
+              ticketingPagePath="/ticketing"
             />
           </section>
           <section style={{ margin: '32px 0 28px 0' }}>
@@ -130,17 +130,17 @@ export default function MovieDetailPage() {
 
           {tabValue === 'info' ? (
             <MovieDetailInfo
-              synopsis={movieDetail.SynopsisKR}
+              synopsis={movie.synopsis}
               prefer={{
                 genderPrefer: {
-                  manPrefer: Number(movieDetail.ManPrefer),
-                  womanPrefer: Number(movieDetail.WomanPrefer),
+                  manPrefer: movie.manPrefer,
+                  womanPrefer: movie.womanPrefer,
                 },
                 agePrefer: {
-                  agePrefer10: Number(movieDetail.AgePrefer10),
-                  agePrefer20: Number(movieDetail.AgePrefer20),
-                  agePrefer30: Number(movieDetail.AgePrefer30),
-                  agePrefer40: Number(movieDetail.AgePrefer40),
+                  agePrefer10: Number(movie.agePrefer10),
+                  agePrefer20: Number(movie.agePrefer20),
+                  agePrefer30: Number(movie.agePrefer30),
+                  agePrefer40: Number(movie.agePrefer40),
                 },
               }}
               trailerItems={trailer}

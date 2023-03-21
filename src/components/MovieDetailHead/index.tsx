@@ -2,28 +2,38 @@ import React from 'react';
 import Image from 'next/image';
 import MovieDetailTitle from './MovieDetailTitle';
 import MovieDetailStatistics from './MovieDetailStatistics';
-import MovieDetailSummary from './MovieDetailSummary';
+import MovieDetailSummary, { MovieSummary } from './MovieDetailSummary';
 import MovieDetailSpecialScreen from './MovieDetailSpecialScreen';
 import MovieDetailAsideButtons from './MovieDetailAsideButtons';
-import { Casting, MovieDetail, SpecialScreen } from '@/query/types';
+import { Casting, SpecialScreen, ViewGradeCode } from '@/query/types';
 
-interface MovieDetailHeadProps {
+export type MovieDetail = {
+  movieName: string;
+  posterUrl: string;
+  viewGradeCode: ViewGradeCode;
+  viewEvaluation: number;
+  bookingRate: number;
+  cumulativeAudience: number;
+  likeCount: number;
+} & MovieSummary;
+
+export interface MovieDetailHeadProps {
   movieDetail: MovieDetail;
   casting: Casting[];
   specialScreen: SpecialScreen[];
-  ticketingPath: string;
+  ticketingPagePath: string;
 }
 
 const MovieDetailHead = ({
   movieDetail,
   casting,
   specialScreen,
-  ticketingPath,
+  ticketingPagePath,
 }: MovieDetailHeadProps) => {
   return (
     <div style={{ position: 'relative', minHeight: '240px', paddingLeft: '245px', width: '980px' }}>
       <Image
-        src={movieDetail.PosterURL}
+        src={movieDetail.posterUrl}
         alt="poster"
         width={205}
         height={293}
@@ -34,16 +44,19 @@ const MovieDetailHead = ({
           borderRadius: '4px',
         }}
       />
-      <MovieDetailTitle viewGradeCode={movieDetail.ViewGradeCode} title={movieDetail.MovieNameKR} />
+      <MovieDetailTitle viewGradeCode={movieDetail.viewGradeCode} title={movieDetail.movieName} />
       <MovieDetailStatistics
-        viewEvaludation={movieDetail.ViewEvaluation}
-        bookingRate={movieDetail.BookingRate}
-        cumulativeAudience={movieDetail.KOFCustCnt}
+        viewEvaludation={movieDetail.viewEvaluation}
+        bookingRate={movieDetail.bookingRate}
+        cumulativeAudience={movieDetail.cumulativeAudience}
       />
-      <MovieDetailSummary movieDetail={movieDetail} casting={casting} />
+      <MovieDetailSummary movieSummary={movieDetail} casting={casting} />
       <MovieDetailSpecialScreen items={specialScreen} />
       <div style={{ position: 'absolute', right: 0, bottom: '10px' }}>
-        <MovieDetailAsideButtons likeCount={movieDetail.LikeCount} ticketingPath={ticketingPath} />
+        <MovieDetailAsideButtons
+          likeCount={movieDetail.likeCount}
+          ticketingPagePath={ticketingPagePath}
+        />
       </div>
     </div>
   );

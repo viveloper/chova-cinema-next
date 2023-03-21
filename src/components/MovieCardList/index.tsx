@@ -2,18 +2,23 @@ import React, { useState } from 'react';
 import { Theme } from '../types';
 import MovieCard from './MovieCard';
 import classes from './MovieCardList.module.css';
-import { Props as MovieCardProps } from './MovieCard';
 import { Movie } from '@/query/types';
 
 export interface Props {
   theme: Theme;
   movies: Movie[];
   showNum: number;
-  ticketingPath: string;
-  movieDetailBasePath: string;
+  ticketingPagePath: string;
+  movieDetailPageBasePath: string;
 }
 
-const MovieCardList = ({ theme, movies, showNum, ticketingPath, movieDetailBasePath }: Props) => {
+const MovieCardList = ({
+  theme,
+  movies,
+  showNum,
+  ticketingPagePath,
+  movieDetailPageBasePath,
+}: Props) => {
   const [startActiveIndex, setStartActiveIndex] = useState(0);
 
   const handlePrevClick = () => {
@@ -54,13 +59,13 @@ const MovieCardList = ({ theme, movies, showNum, ticketingPath, movieDetailBaseP
           style={{ transform: `translateX(${startActiveIndex * -199}px)` }}
         >
           {movies.map((movie, index) => (
-            <li key={movie.RepresentationMovieCode} className={classes.movie}>
+            <li key={movie.movieCode} className={classes.movie}>
               <MovieCard
                 movie={movie}
-                number={index + 1}
+                cardNumber={index + 1}
                 theme={theme}
-                ticketingPath={ticketingPath}
-                movieDetailPath={`${movieDetailBasePath}/${movie.RepresentationMovieCode}`}
+                ticketingPagePath={ticketingPagePath}
+                movieDetailPagePath={`${movieDetailPageBasePath}/${movie.movieCode}`}
               />
             </li>
           ))}

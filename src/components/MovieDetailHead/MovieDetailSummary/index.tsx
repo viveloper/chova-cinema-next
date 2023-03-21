@@ -2,27 +2,35 @@ import { Casting, MovieDetail } from '@/query/types';
 import React from 'react';
 import classes from './MovieDetailSummary.module.css';
 
-interface MovieDetailSummaryProps {
-  movieDetail: MovieDetail;
+export type MovieSummary = {
+  genreName: string;
+  genreName2: string;
+  makingNationName: string;
+  releaseDate: string;
+  playTime: number;
+};
+
+export interface MovieDetailSummaryProps {
+  movieSummary: MovieSummary;
   casting: Casting[];
 }
 
-const MovieDetailSummary = ({ movieDetail, casting }: MovieDetailSummaryProps) => {
+const MovieDetailSummary = ({ movieSummary, casting }: MovieDetailSummaryProps) => {
   return (
     <ul className={classes['detail-info']}>
       <li>
         <span className={classes['detail-info-type']}>장르</span>
         <span
           className={classes['detail-info-value']}
-        >{`${movieDetail.MovieGenreNameKR}, ${movieDetail.MovieGenreNameKR2} / ${movieDetail.MakingNationNameKR}`}</span>
+        >{`${movieSummary.genreName}, ${movieSummary.genreName2} / ${movieSummary.makingNationName}`}</span>
         <span className={`${classes['detail-info-value']} ${classes['separator']}`}>{`${
-          movieDetail.ReleaseDate.split(' ')[0].split('-')[0]
-        }.${movieDetail.ReleaseDate.split(' ')[0].split('-')[1]}.${
-          movieDetail.ReleaseDate.split(' ')[0].split('-')[2]
+          movieSummary.releaseDate.split(' ')[0].split('-')[0]
+        }.${movieSummary.releaseDate.split(' ')[0].split('-')[1]}.${
+          movieSummary.releaseDate.split(' ')[0].split('-')[2]
         } 개봉`}</span>
         <span
           className={`${classes['detail-info-value']} ${classes['separator']}`}
-        >{`${movieDetail.PlayTime}분`}</span>
+        >{`${movieSummary.playTime}분`}</span>
       </li>
       <li>
         <span className={classes['detail-info-type']}>감독</span>
