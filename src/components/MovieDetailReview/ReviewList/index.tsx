@@ -13,6 +13,7 @@ import { userState } from '@/store/auth';
 
 export interface ReviewListProps {
   list: Review[];
+  ownReviewId?: number;
   totalCount: number;
   sortType: ReviewSortType;
   isFetchingNextPage?: boolean;
@@ -31,6 +32,7 @@ export interface ReviewListProps {
 
 const ReviewList = ({
   list,
+  ownReviewId,
   totalCount,
   sortType,
   isFetchingNextPage = false,
@@ -40,8 +42,6 @@ const ReviewList = ({
   onEdit,
   onLike,
 }: ReviewListProps) => {
-  const user = useRecoilValue(userState);
-
   const getServeyIcon = (score: number) => {
     if (score >= 9) {
       return serveyIcon01;
@@ -82,7 +82,8 @@ const ReviewList = ({
               index === 0 || index === arr.length - 1 ? name + character : name + '*',
             '',
           );
-          const isOwn = item.MemberID === user?.id;
+          // const isOwn = item.MemberID === user?.id;
+          const isOwn = item.ReviewID === ownReviewId;
           return (
             <li
               key={item.ReviewID}

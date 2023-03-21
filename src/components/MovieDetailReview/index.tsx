@@ -260,6 +260,7 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
             <ReviewList
               totalCount={data.pages[0].totalCount}
               list={reviewList}
+              ownReviewId={reviewList.find((review) => review.MemberID === user?.id)?.ReviewID}
               sortType={sortType}
               isFetchingNextPage={isFetchingNextPage}
               onDelete={handleReviewDelete}

@@ -21,6 +21,7 @@ Primary.args = {
   totalCount: 705,
   sortType: 'recent',
   isFetchingNextPage: false,
+  ownReviewId: 829644938,
   list: [
     {
       ReviewID: 829644938,
