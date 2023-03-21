@@ -28,7 +28,7 @@
 ## 배포
 
 - 서비스 : http://ec2-3-238-149-181.compute-1.amazonaws.com:3000
-- 스토리북 : https://6405c80c29140ed0511a0535-howeqxaift.chromatic.com
+- 스토리북 : https://6405c80c29140ed0511a0535-gjcnkvwvoc.chromatic.com
 - API 서버 : http://ec2-3-238-149-181.compute-1.amazonaws.com:8000
 
 ## API 서버 레포
