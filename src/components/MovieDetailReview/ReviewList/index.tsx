@@ -82,7 +82,6 @@ const ReviewList = ({
               index === 0 || index === arr.length - 1 ? name + character : name + '*',
             '',
           );
-          // const isOwn = item.MemberID === user?.id;
           const isOwn = item.ReviewID === ownReviewId;
           return (
             <li

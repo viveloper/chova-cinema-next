@@ -43,7 +43,7 @@
 }
 .items .item img {
   position: absolute;
-  left: 0;
+  left: 16px;
   top: 20px;
 }
 .items .item .top-info {
@@ -99,7 +99,7 @@
 .items .item .user-control {
   position: absolute;
   top: 20px;
-  right: 0;
+  right: 16px;
 }
 .items .item .user-control button {
   display: inline-block;
