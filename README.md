@@ -5,7 +5,7 @@
 ## 작업 할 내용
 
 - 정적 타입 언어 사용 (TypeScript)
-- SSG, ISR, SSR, CSR 활용 (Next.js)
+- SSG, SSR, CSR 활용 (Next.js)
 - 프론트엔드 비즈니스 로직 개선을 위한 백엔드 API 개선 작업 (Express.js)
 - 서버 데이터 관리 방식 변경 (TanStack Query)
 - 재사용성 증대를 위한 컴포넌트 리팩토링
@@ -17,7 +17,7 @@
 
 - Next.js, TypeScript, Recoil, TanStack Query(React Query), Emotion, Storybook, MSW
 
-## 주요 기능
+## 주요 기능 진행 상황
 
 - [x] 영화 목록 보기
 - [x] 영화 상세 보기
