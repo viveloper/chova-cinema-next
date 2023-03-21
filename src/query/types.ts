@@ -132,10 +132,10 @@ export type MovieDetailPageData = {
 
 export type MovieReviewData = {
   page: number;
-  reviewList: Review[];
+  reviews: Review[];
   pageCount: number;
   totalCount: number;
-  avgScore: number;
+  scoreAvg: number;
 };
 
 export type CarouselQuery = {

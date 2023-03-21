@@ -83,7 +83,7 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
     if (!data) return [];
     let reviewList: Review[] = [];
     data.pages.forEach((page) => {
-      page.reviewList.forEach((review) => {
+      page.reviews.forEach((review) => {
         reviewList.push(review);
       });
     });
@@ -235,7 +235,7 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
         <>
           <section style={{ margin: '32px 0' }}>
             <ScoreBox
-              score={data.pages[0].avgScore}
+              score={data.pages[0].scoreAvg}
               totalScore={10}
               description={
                 <>
