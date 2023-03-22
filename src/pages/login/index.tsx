@@ -10,10 +10,10 @@ interface LoginProps {}
 const TEST_USER_EMAIL = process.env.NEXT_PUBLIC_TEST_USER_EMAIL;
 const TEST_USER_PASSWORD = process.env.NEXT_PUBLIC_TEST_USER_PASSWORD;
 
+// TODO: 입력값 유효성 검사
 function Login({}: LoginProps) {
   const { isLoading, errorMessage, login } = useAuth();
 
-  // TODO: input validation 고도화
   const [email, setEmail] = useState(TEST_USER_EMAIL ?? '');
   const [password, setPassword] = useState(TEST_USER_PASSWORD ?? '');
 
