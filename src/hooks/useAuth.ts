@@ -5,8 +5,8 @@ import { client, createQueryKey } from '@/query';
 import { useRouter } from 'next/router';
 import { LoginRequestBody } from '@/query/types';
 import axios from 'axios';
-import { useQuery } from '@tanstack/react-query';
-import { queryLoginData, queryUserData } from '@/query/userData';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { addUserData, queryLoginData, queryUserData } from '@/query/userData';
 
 const useAuth = () => {
   const setAuthState = useSetRecoilState(authState);
@@ -14,7 +14,7 @@ const useAuth = () => {
   const user = useRecoilValue(userState);
 
   const [isLogin, setIsLogin] = useState(false);
-  const [loginErrorMessage, setLoginErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -34,7 +34,7 @@ const useAuth = () => {
     enabled: isLogin,
   });
 
-  const { isFetching } = useQuery({
+  const { isFetching: isLoginLoading } = useQuery({
     queryKey: createQueryKey({ queryType: 'LOGIN_DATA', options: { email, password } }),
     queryFn: () => queryLoginData({ email, password }),
     enabled: !!email && !!password,
@@ -43,16 +43,40 @@ const useAuth = () => {
       client.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
       localStorage.setItem('token', data.token);
       setAuthState(data);
-      setLoginErrorMessage('');
+      setErrorMessage('');
       // TODO: 메인 페이지 or 이전 페이지로 이동
       router.push('/');
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
         if (error.response) {
-          setLoginErrorMessage(error.response.data.message ?? '');
+          setErrorMessage(error.response.data.message ?? '');
         } else {
-          setLoginErrorMessage(error.message);
+          setErrorMessage(error.message);
+        }
+      } else {
+        // Just a stock error
+      }
+    },
+  });
+
+  const { mutate: signup, isLoading: isSignupLoading } = useMutation({
+    mutationFn: addUserData,
+    onSuccess: (data) => {
+      // axios 인스턴스의 요청 헤더 설정에 인증 토큰 셋업
+      client.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
+      localStorage.setItem('token', data.token);
+      setAuthState(data);
+      setErrorMessage('');
+      // TODO: 메인 페이지 or 이전 페이지로 이동
+      router.push('/');
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          setErrorMessage(error.response.data.message ?? '');
+        } else {
+          setErrorMessage(error.message);
         }
       } else {
         // Just a stock error
@@ -74,11 +98,12 @@ const useAuth = () => {
 
   return {
     isLogin,
-    isLoginLoading: isFetching,
-    loginErrorMessage,
+    isLoading: isLoginLoading || isSignupLoading,
+    errorMessage,
     user,
     logout,
     login,
+    signup,
   };
 };
 

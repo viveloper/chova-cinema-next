@@ -11,7 +11,7 @@ const TEST_USER_EMAIL = process.env.NEXT_PUBLIC_TEST_USER_EMAIL;
 const TEST_USER_PASSWORD = process.env.NEXT_PUBLIC_TEST_USER_PASSWORD;
 
 function Login({}: LoginProps) {
-  const { isLoginLoading, loginErrorMessage, login } = useAuth();
+  const { isLoading, errorMessage, login } = useAuth();
 
   // TODO: input validation 고도화
   const [email, setEmail] = useState(TEST_USER_EMAIL ?? '');
@@ -32,7 +32,7 @@ function Login({}: LoginProps) {
       </Head>
       <Layout>
         <LoginBlock>
-          {isLoginLoading && (
+          {isLoading && (
             <LoadingWrapper>
               <RotatingLines
                 strokeColor="#f45866"
@@ -65,7 +65,7 @@ function Login({}: LoginProps) {
                 </div>
                 <button type="submit">로그인</button>
               </form>
-              {loginErrorMessage && <p className="error-message">{loginErrorMessage}</p>}
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
             </div>
           </LoginFormBlock>
         </LoginBlock>

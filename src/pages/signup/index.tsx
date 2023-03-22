@@ -1,19 +1,11 @@
 import Layout from '@/components/Layout';
-import { client } from '@/query';
-import { addUserData } from '@/query/userData';
-import { authState } from '@/store/auth';
+import useAuth from '@/hooks/useAuth';
 import styled from '@emotion/styled';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
 
-// TODO: Signup 페이지 구현
+// TODO: 입력값 유효성 검사
 export default function Signup() {
-  const setAuthState = useSetRecoilState(authState);
-
   const [inputs, setInputs] = useState({
     name: '',
     email: '',
@@ -21,33 +13,7 @@ export default function Signup() {
     confirmPassword: '',
   });
 
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const router = useRouter();
-
-  const { mutate: signup } = useMutation({
-    mutationFn: addUserData,
-    onSuccess: (data) => {
-      // axios 인스턴스의 요청 헤더 설정에 인증 토큰 셋업
-      client.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
-      localStorage.setItem('token', data.token);
-      setAuthState(data);
-      setErrorMessage('');
-      // TODO: 메인 페이지 or 이전 페이지로 이동
-      router.push('/');
-    },
-    onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          setErrorMessage(error.response.data.message ?? '');
-        } else {
-          setErrorMessage(error.message);
-        }
-      } else {
-        // Just a stock error
-      }
-    },
-  });
+  const { signup, errorMessage } = useAuth();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
