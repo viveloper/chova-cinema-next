@@ -19,6 +19,8 @@ export const createQueryKey = ({
     reviewPage?: number;
     reviewCount?: number;
     reviewSortType?: ReviewSortType;
+    email?: string;
+    password?: string;
   };
 }) => {
   switch (queryType) {
@@ -39,6 +41,8 @@ export const createQueryKey = ({
       ].filter((item) => item !== undefined);
     case 'USER_DATA':
       return ['user'];
+    case 'LOGIN_DATA':
+      return ['login', options?.email, options?.password].filter((item) => item !== undefined);
     default:
       return [];
   }

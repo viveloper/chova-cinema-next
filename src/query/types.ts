@@ -11,7 +11,8 @@ export type QueryType =
   | 'MOVIES_DETAIL_PAGE_DATA'
   | 'MOVIE_REVIEW_DATA'
   | 'MOVIE_REVIEW_INFINITE_DATA'
-  | 'USER_DATA';
+  | 'USER_DATA'
+  | 'LOGIN_DATA';
 
 export type CarouselItem = {
   img: string;
@@ -181,4 +182,11 @@ export type LoginRequestBody = {
 export type LoginResponse = {
   token: string;
   user: User;
+};
+
+export type SignupRequestBody = {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 };
