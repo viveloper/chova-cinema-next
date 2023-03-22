@@ -3,7 +3,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { authState, isLoginState, userState } from '@/store/auth';
 import { client, createQueryKey } from '@/query';
 import { useRouter } from 'next/router';
-import { LoginRequestBody, LoginResponse } from '@/query/types';
+import { LoginRequestBody } from '@/query/types';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { queryLoginData, queryUserData } from '@/query/userData';

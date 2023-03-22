@@ -1,5 +1,5 @@
 import { client } from '.';
-import { LoginRequestBody, LoginResponse, User } from './types';
+import { LoginRequestBody, LoginResponse, SignupRequestBody, User } from './types';
 
 export const queryUserData = async () => {
   const [{ data }] = await Promise.all([client.get<User>(`/user`)]);
@@ -14,7 +14,7 @@ export const queryLoginData = async ({ email, password }: LoginRequestBody) => {
   return data;
 };
 
-// export const addUserData = async (data: UserPostData) => {
-//   const { data: review } = await client.post<Review>('/review', data);
-//   return review;
-// };
+export const addUserData = async (data: SignupRequestBody) => {
+  const { data: review } = await client.post<LoginResponse>('/auth/signup', data);
+  return review;
+};

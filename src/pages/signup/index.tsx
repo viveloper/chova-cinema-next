@@ -1,9 +1,65 @@
-import ComingSoon from '@/components/ComingSoon';
 import Layout from '@/components/Layout';
+import { client } from '@/query';
+import { addUserData } from '@/query/userData';
+import { authState } from '@/store/auth';
+import styled from '@emotion/styled';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 
 // TODO: Signup 페이지 구현
 export default function Signup() {
+  const setAuthState = useSetRecoilState(authState);
+
+  const [inputs, setInputs] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const router = useRouter();
+
+  const { mutate: signup } = useMutation({
+    mutationFn: addUserData,
+    onSuccess: (data) => {
+      // axios 인스턴스의 요청 헤더 설정에 인증 토큰 셋업
+      client.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
+      localStorage.setItem('token', data.token);
+      setAuthState(data);
+      setErrorMessage('');
+      // TODO: 메인 페이지 or 이전 페이지로 이동
+      router.push('/');
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          setErrorMessage(error.response.data.message ?? '');
+        } else {
+          setErrorMessage(error.message);
+        }
+      } else {
+        // Just a stock error
+      }
+    },
+  });
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    signup({ ...inputs });
+  };
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInputs((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
   return (
     <>
       <Head>
@@ -13,8 +69,107 @@ export default function Signup() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <ComingSoon />
+        <SigninBlock>
+          <div className="tabs"></div>
+          <SigninFormBlock>
+            <div className="center">
+              <form onSubmit={handleSubmit}>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="이름을 입력해주세요"
+                    value={inputs.name}
+                    onChange={handleChange}
+                  />
+                  <input
+                    type="text"
+                    name="email"
+                    placeholder="이메일을 입력해주세요"
+                    value={inputs.email}
+                    onChange={handleChange}
+                  />
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="비밀번호를 입력해주세요"
+                    value={inputs.password}
+                    onChange={handleChange}
+                  />
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="비밀번호를 다시 한번 입력해주세요"
+                    value={inputs.confirmPassword}
+                    onChange={handleChange}
+                  />
+                </div>
+                <button type="submit">회원가입</button>
+              </form>
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
+            </div>
+          </SigninFormBlock>
+        </SigninBlock>
       </Layout>
     </>
   );
 }
+
+const SigninBlock = styled.div`
+  padding: 60px 0;
+  margin: 80px 0;
+`;
+
+const SigninFormBlock = styled.div`
+  background: #f5f5f5;
+  width: 100%;
+  height: 360px;
+  .center {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  form {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    .input-group {
+      flex: 1;
+      input {
+        display: block;
+        width: 100%;
+        height: 45px;
+        padding: 0 18px;
+        font-size: 14px;
+        font-family: 'Noto Sans KR', 'Roboto', 'dotum', 'sans-serif';
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        outline: none;
+      }
+      input + input {
+        margin-top: 10px;
+      }
+    }
+    button {
+      background: #ff243e;
+      width: 110px;
+      border: none;
+      border-radius: 4px;
+      outline: none;
+      color: #fff;
+      font-size: 16px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      &:hover {
+        background: #ff7384;
+      }
+    }
+  }
+  .error-message {
+    font-family: 'Noto Sans KR', 'Roboto', 'dotum', 'sans-serif';
+    color: red;
+    margin-top: 20px;
+  }
+`;
