@@ -31,7 +31,7 @@ const useAuth = () => {
     enabled: isLogin,
   });
 
-  // TODO: react-query의 에러 핸들링 공통화 / 고도화
+  // TODO: react-query의 에러 핸들링 공통화 / 고도화.
   const { mutate: login, isLoading: isLoginLoading } = useMutation({
     mutationFn: postLoginData,
     onSuccess: (data) => {
