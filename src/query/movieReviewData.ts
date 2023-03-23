@@ -34,13 +34,7 @@ export const editMovieReviewData = async ({
   return review;
 };
 
-export const deleteMovieReviewData = async ({
-  reviewId,
-  data,
-}: {
-  reviewId: number;
-  data: MovieReviewDeleteData;
-}) => {
-  const { data: review } = await client.delete<Review>(`/review/${reviewId}`, { data });
+export const deleteMovieReviewData = async (reviewId: number) => {
+  const { data: review } = await client.delete<Review>(`/review/${reviewId}`);
   return review;
 };
