@@ -8,7 +8,7 @@
 - SSG, SSR, CSR 활용 (Next.js)
 - 프론트엔드 비즈니스 로직 개선을 위한 백엔드 API 개선 작업 (Express.js)
 - 파일 기반의 서버 데이터를 DB로 이관 (MongoDB Atlas)
-- 서버 데이터 관리 방식 변경 (TanStack Query)
+- API 비동기 호출 및 서버 사이드 상태 관리 방식 변경 (TanStack Query)
 - 재사용성 증대를 위한 컴포넌트 리팩토링
 - 로딩 / 에러 핸들링 고도화
 - 컴포넌트 스타일링 방식 개선
