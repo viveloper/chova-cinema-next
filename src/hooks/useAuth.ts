@@ -3,11 +3,9 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { authState, isLoginState, userState } from '@/store/auth';
 import { client, createQueryKey } from '@/query';
 import { useRouter } from 'next/router';
-import { LoginRequestBody } from '@/query/types';
 import axios from 'axios';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { addUserData, queryLoginData, queryUserData } from '@/query/userData';
-import { isLoginResponse } from '@/utils/typeGuards';
+import { addUserData, postLoginData, queryUserData } from '@/query/userData';
 
 const useAuth = () => {
   const setAuthState = useSetRecoilState(authState);
@@ -16,8 +14,6 @@ const useAuth = () => {
 
   const [isLogin, setIsLogin] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const router = useRouter();
 
@@ -35,24 +31,27 @@ const useAuth = () => {
     enabled: isLogin,
   });
 
-  // TODO: react-query의 에러 핸들링 고도화
-  // useQuery의 경우 useMutation과 다르게 에러 발생 시 onError 콜백 함수 실행 전에 ErrorBoundary로 전달되어 원하는 에러 핸들링이 어려움.
-  // 해결을 위해 queryFn의 catch 문에서 에러를 반환하여 onSuccess에서 성공과 실패를 함께 처리함. 개선 필요.
-  const { isFetching: isLoginLoading } = useQuery({
-    queryKey: createQueryKey({ queryType: 'LOGIN_DATA', options: { email, password } }),
-    queryFn: () => queryLoginData({ email, password }),
-    enabled: !!email && !!password,
+  // TODO: react-query의 에러 핸들링 공통화 / 고도화
+  const { mutate: login, isLoading: isLoginLoading } = useMutation({
+    mutationFn: postLoginData,
     onSuccess: (data) => {
-      if (isLoginResponse(data)) {
-        // axios 인스턴스의 요청 헤더 설정에 인증 토큰 셋업
-        client.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
-        localStorage.setItem('token', data.token);
-        setAuthState(data);
-        setErrorMessage('');
-        // TODO: 메인 페이지 or 이전 페이지로 이동
-        router.push('/');
+      // axios 인스턴스의 요청 헤더 설정에 인증 토큰 셋업
+      client.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
+      localStorage.setItem('token', data.token);
+      setAuthState(data);
+      setErrorMessage('');
+      // TODO: 메인 페이지 or 이전 페이지로 이동
+      router.push('/');
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          setErrorMessage(error.response.data.message ?? '');
+        } else {
+          setErrorMessage(error.message);
+        }
       } else {
-        setErrorMessage(data.message);
+        // Just a stock error
       }
     },
   });
@@ -80,11 +79,6 @@ const useAuth = () => {
       }
     },
   });
-
-  const login = ({ email, password }: LoginRequestBody) => {
-    setEmail(email);
-    setPassword(password);
-  };
 
   const logout = () => {
     client.defaults.headers.common['Authorization'] = undefined;

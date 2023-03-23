@@ -7,25 +7,12 @@ export const queryUserData = async () => {
   return data;
 };
 
-export const queryLoginData = async ({ email, password }: LoginRequestBody) => {
-  try {
-    const { data } = await client.post<LoginResponse>('/auth/login', {
-      email,
-      password,
-    });
-    return data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.response) {
-        return new Error(error.response.data.message ?? '');
-      } else {
-        throw new Error(error.message);
-      }
-    } else {
-      // Just a stock error
-      throw error;
-    }
-  }
+export const postLoginData = async ({ email, password }: LoginRequestBody) => {
+  const { data } = await client.post<LoginResponse>('/auth/login', {
+    email,
+    password,
+  });
+  return data;
 };
 
 export const addUserData = async (data: SignupRequestBody) => {

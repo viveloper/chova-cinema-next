@@ -11,8 +11,7 @@ export type QueryType =
   | 'MOVIES_DETAIL_PAGE_DATA'
   | 'MOVIE_REVIEW_DATA'
   | 'MOVIE_REVIEW_INFINITE_DATA'
-  | 'USER_DATA'
-  | 'LOGIN_DATA';
+  | 'USER_DATA';
 
 export type CarouselItem = {
   img: string;

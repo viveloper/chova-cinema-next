@@ -1,10 +1,5 @@
 import { client } from '.';
 import {
-  CarouselItem,
-  CarouselQuery,
-  Movie,
-  MoviesPageData,
-  MoviesQuery,
   MovieReviewQuery,
   MovieReviewData,
   MovieReviewPostData,
