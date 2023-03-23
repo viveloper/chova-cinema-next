@@ -164,7 +164,6 @@ export type MovieReviewPostData = {
   text: string;
 };
 export type MovieReviewPutData = {
-  movieCode: string;
   score: number;
   text: string;
   toggleLike: boolean;

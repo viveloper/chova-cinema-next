@@ -173,7 +173,7 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
       if (!edittingReviewId) return;
       editReview({
         reviewId: edittingReviewId,
-        data: { movieCode, score, text, toggleLike: false },
+        data: { score, text, toggleLike: false },
       });
     }
   };
@@ -205,7 +205,6 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
     editReview({
       reviewId,
       data: {
-        movieCode,
         score: targetReview.Evaluation,
         text: targetReview.ReviewText,
         toggleLike: true,
