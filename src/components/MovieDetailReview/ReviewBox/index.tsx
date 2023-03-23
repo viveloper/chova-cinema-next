@@ -1,5 +1,6 @@
 import { ReviewPostMode } from '@/query/types';
 import { useState, useEffect, ChangeEvent } from 'react';
+import { ThreeDots } from 'react-loader-spinner';
 import classes from './ReviewBox.module.css';
 
 export interface ReviewBoxProps {
@@ -7,6 +8,7 @@ export interface ReviewBoxProps {
   score: number;
   text: string;
   maxLength: number;
+  isLoading?: boolean;
   onScoreChange: (score: number) => void;
   onTextChange: (text: string) => void;
   onSubmit: ({ mode, score, text }: { mode: ReviewPostMode; score: number; text: string }) => void;
@@ -17,6 +19,7 @@ const ReviewBox = ({
   score,
   text,
   maxLength,
+  isLoading = false,
   onScoreChange,
   onTextChange,
   onSubmit,
@@ -69,8 +72,20 @@ const ReviewBox = ({
           {` / ${maxLength}`}
         </span>
       </div>
-      <button className={classes['btn-write']} onClick={handleSubmit}>
-        {mode === 'add' ? '관람평 작성' : '관람평 수정'}
+      <button className={classes['btn-write']} onClick={handleSubmit} disabled={isLoading}>
+        {isLoading ? (
+          <ThreeDots
+            height="24"
+            width="24"
+            radius="9"
+            color="#bbb"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{ display: 'inline-block', width: 'fit-content' }}
+            visible={true}
+          />
+        ) : (
+          <span>{mode === 'add' ? '관람평 작성' : '관람평 수정'}</span>
+        )}
       </button>
     </div>
   );

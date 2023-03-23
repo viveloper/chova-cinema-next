@@ -94,7 +94,7 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
         );
   }, [data, user]);
 
-  const { mutate: addReview } = useMutation({
+  const { mutate: addReview, isLoading: isAddReviewLoading } = useMutation({
     mutationFn: addMovieReviewData,
     onError: (error) => {
       if (axios.isAxiosError(error)) {
@@ -114,7 +114,7 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
     },
   });
 
-  const { mutate: editReview } = useMutation({
+  const { mutate: editReview, isLoading: isEditReviewLoading } = useMutation({
     mutationFn: editMovieReviewData,
     onError: (error) => {
       if (axios.isAxiosError(error)) {
@@ -251,6 +251,7 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
               score={reviewBoxScore}
               text={reviewBoxText}
               maxLength={220}
+              isLoading={isAddReviewLoading || isEditReviewLoading}
               onScoreChange={(score) => setReviewBoxScore(score)}
               onTextChange={(text) => setReviewBoxText(text)}
               onSubmit={handleReviewSubmit}
