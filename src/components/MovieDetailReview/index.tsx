@@ -14,9 +14,9 @@ import { Review, ReviewSortType } from '@/query/types';
 import { Grid as GridLoading } from 'react-loader-spinner';
 import useAuth from '@/hooks/useAuth';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/store/auth';
+import getErrorMessage from '@/utils/getErrorMessage';
 
 export interface MovieDetailReviewProps {
   movieCode: string;
@@ -96,55 +96,40 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
 
   const { mutate: addReview, isLoading: isAddReviewLoading } = useMutation({
     mutationFn: addMovieReviewData,
-    onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          alert(error.response.data.message);
-        } else {
-          alert(error.message);
-        }
-      } else {
-        // Just a stock error
-      }
-    },
     onSuccess: () => {
       invalidateReviewQuery();
       invalidateUserQuery();
       clearReviewBox();
+    },
+    onError: (error) => {
+      const errorMessage = getErrorMessage(error);
+      if (errorMessage) {
+        alert(errorMessage);
+      }
     },
   });
 
   const { mutate: editReview, isLoading: isEditReviewLoading } = useMutation({
     mutationFn: editMovieReviewData,
-    onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          alert(error.response.data.message);
-        } else {
-          alert(error.message);
-        }
-      } else {
-        // Just a stock error
-      }
-    },
     onSuccess: () => {
       invalidateReviewQuery();
       invalidateUserQuery();
       clearReviewBox();
+    },
+    onError: (error) => {
+      const errorMessage = getErrorMessage(error);
+      if (errorMessage) {
+        alert(errorMessage);
+      }
     },
   });
 
   const { mutate: deleteReview } = useMutation({
     mutationFn: deleteMovieReviewData,
     onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          alert(error.response.data.message);
-        } else {
-          alert(error.message);
-        }
-      } else {
-        // Just a stock error
+      const errorMessage = getErrorMessage(error);
+      if (errorMessage) {
+        alert(errorMessage);
       }
     },
     onSuccess: () => {

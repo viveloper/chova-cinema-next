@@ -3,9 +3,9 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { authState, isLoginState, userState } from '@/store/auth';
 import { client, createQueryKey } from '@/query';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { addUserData, postLoginData, queryUserData } from '@/query/userData';
+import getErrorMessage from '@/utils/getErrorMessage';
 
 const useAuth = () => {
   const setAuthState = useSetRecoilState(authState);
@@ -44,14 +44,9 @@ const useAuth = () => {
       router.push('/');
     },
     onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          setErrorMessage(error.response.data.message ?? '');
-        } else {
-          setErrorMessage(error.message);
-        }
-      } else {
-        // Just a stock error
+      const errorMessage = getErrorMessage(error);
+      if (errorMessage) {
+        setErrorMessage(errorMessage);
       }
     },
   });
@@ -68,14 +63,9 @@ const useAuth = () => {
       router.push('/');
     },
     onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          setErrorMessage(error.response.data.message ?? '');
-        } else {
-          setErrorMessage(error.message);
-        }
-      } else {
-        // Just a stock error
+      const errorMessage = getErrorMessage(error);
+      if (errorMessage) {
+        setErrorMessage(errorMessage);
       }
     },
   });
