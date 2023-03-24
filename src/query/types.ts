@@ -95,18 +95,14 @@ export type User = {
 
 export type Review = {
   ReviewID: number;
-  MemberNo: number;
   MemberID: string;
   MemberName: string;
   ReviewText: string;
-  MoviePlayYN: string;
   Evaluation: number;
   RecommandCount: number;
-  MovieViewYN: string;
   RepresentationMovieCode: string;
   MemberRecommandYN: string;
   RegistDate: string;
-  ProfilePhoto: string;
   MemberNickName: string;
 };
 
@@ -168,9 +164,6 @@ export type MovieReviewPutData = {
   score: number;
   text: string;
   toggleLike: boolean;
-};
-export type MovieReviewDeleteData = {
-  movieCode: string;
 };
 
 export type LoginRequestBody = {

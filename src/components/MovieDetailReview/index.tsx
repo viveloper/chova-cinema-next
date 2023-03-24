@@ -1,7 +1,7 @@
 import ReviewBox, { ReviewBoxProps } from './ReviewBox';
 import ScoreBox from './ScoreBox';
 import ReviewList, { ReviewListProps } from './ReviewList';
-import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { createQueryKey } from '@/query';
 import {
   addMovieReviewData,
@@ -10,13 +10,14 @@ import {
   queryMovieReviewData,
 } from '@/query/movieReviewData';
 import { useMemo, useState } from 'react';
-import { Review, ReviewSortType } from '@/query/types';
+import { MovieReviewData, Review, ReviewSortType } from '@/query/types';
 import { Grid as GridLoading } from 'react-loader-spinner';
 import useAuth from '@/hooks/useAuth';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/store/auth';
 import getErrorMessage from '@/utils/getErrorMessage';
+import produce from 'immer';
 
 export interface MovieDetailReviewProps {
   movieCode: string;
@@ -87,12 +88,8 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
         reviewList.push(review);
       });
     });
-    return !user
-      ? reviewList
-      : reviewList.map((item) =>
-          user.reviewLikeList.includes(item.ReviewID) ? { ...item, MemberRecommandYN: 'Y' } : item,
-        );
-  }, [data, user]);
+    return reviewList;
+  }, [data]);
 
   const { mutate: addReview, isLoading: isAddReviewLoading } = useMutation({
     mutationFn: addMovieReviewData,
@@ -109,18 +106,84 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
     },
   });
 
+  // Optimistically update
   const { mutate: editReview, isLoading: isEditReviewLoading } = useMutation({
     mutationFn: editMovieReviewData,
+    // When mutate is called:
+    onMutate: async ({ reviewId, data: { score, text, toggleLike } }) => {
+      const queryKey = createQueryKey({
+        queryType: 'MOVIE_REVIEW_INFINITE_DATA',
+        options: {
+          movieCode,
+          reviewSortType: sortType,
+        },
+      });
+      // Cancel any outgoing refetches
+      // (so they don't overwrite our optimistic update)
+      await queryClient.cancelQueries({ queryKey });
+
+      // Snapshot the previous value
+      const previousReviews = queryClient.getQueryData<InfiniteData<MovieReviewData>>(queryKey);
+
+      // Optimistically update to the new value
+      queryClient.setQueryData<InfiniteData<MovieReviewData>>(queryKey, (old) => {
+        const newData = produce(old, (draft) => {
+          draft?.pages.forEach((page) => {
+            const targetReview = page.reviews.find((review) => review.ReviewID === reviewId);
+            if (targetReview) {
+              if (toggleLike) {
+                console.log('like', JSON.stringify(targetReview));
+                if (targetReview.MemberRecommandYN === 'Y') {
+                  targetReview.MemberRecommandYN = 'N';
+                  targetReview.RecommandCount -= 1;
+                } else {
+                  targetReview.MemberRecommandYN = 'Y';
+                  targetReview.RecommandCount += 1;
+                }
+              } else {
+                targetReview.Evaluation = score;
+                targetReview.ReviewText = text;
+              }
+            }
+          });
+        });
+        return newData;
+      });
+
+      // Return a context object with the snapshotted value
+      return { previousReviews };
+    },
     onSuccess: () => {
       invalidateReviewQuery();
       invalidateUserQuery();
       clearReviewBox();
     },
-    onError: (error) => {
+    onError: (error, review, context) => {
+      queryClient.setQueryData(
+        createQueryKey({
+          queryType: 'MOVIE_REVIEW_INFINITE_DATA',
+          options: {
+            movieCode,
+            reviewSortType: sortType,
+          },
+        }),
+        context?.previousReviews,
+      );
       const errorMessage = getErrorMessage(error);
       if (errorMessage) {
         alert(errorMessage);
       }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: createQueryKey({
+          queryType: 'MOVIE_REVIEW_INFINITE_DATA',
+          options: {
+            movieCode,
+            reviewSortType: sortType,
+          },
+        }),
+      });
     },
   });
 

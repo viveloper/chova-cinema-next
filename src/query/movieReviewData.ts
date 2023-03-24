@@ -5,7 +5,6 @@ import {
   MovieReviewPostData,
   Review,
   MovieReviewPutData,
-  MovieReviewDeleteData,
 } from './types';
 
 export const queryMovieReviewData = async (query: MovieReviewQuery) => {
