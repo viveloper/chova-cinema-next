@@ -18,4 +18,5 @@ Primary.args = {
   score: 10,
   text: '',
   maxLength: 220,
+  isLoading: false,
 };

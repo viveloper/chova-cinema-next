@@ -194,12 +194,17 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
   };
 
   const handleReviewLike: ReviewListProps['onLike'] = (reviewId) => {
+    if (isEditReviewLoading) {
+      return;
+    }
+
     if (!isLogin) {
       if (window.confirm('로그인이 필요한 기능입니다. 로그인 하시겠습니까?')) {
         router.push('/login');
       }
       return;
     }
+
     const targetReview = reviewList.find((item) => item.ReviewID === reviewId);
     if (!targetReview) return;
     editReview({
