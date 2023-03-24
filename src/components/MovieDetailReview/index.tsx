@@ -132,7 +132,6 @@ export default function MovieDetailReview({ movieCode }: MovieDetailReviewProps)
             const targetReview = page.reviews.find((review) => review.ReviewID === reviewId);
             if (targetReview) {
               if (toggleLike) {
-                console.log('like', JSON.stringify(targetReview));
                 if (targetReview.MemberRecommandYN === 'Y') {
                   targetReview.MemberRecommandYN = 'N';
                   targetReview.RecommandCount -= 1;
