@@ -6,7 +6,6 @@ import MovieDetailReview from '@/components/MovieDetailReview';
 import Tabs from '@/components/Tabs';
 import { client, createQueryKey } from '@/query';
 import { queryMovieDetailPageData } from '@/query/movieDetailPageData';
-import { queryMovieReviewData } from '@/query/movieReviewData';
 import { Movie } from '@/query/types';
 import numberWithCommas from '@/utils/numberWithCommas';
 import { dehydrate, DehydratedState, QueryClient, useQuery } from '@tanstack/react-query';
@@ -66,26 +65,6 @@ export default function MovieDetailPage() {
     enabled: Boolean(movieCode),
   });
 
-  const { data: movieReviewData } = useQuery({
-    queryKey: createQueryKey({
-      queryType: 'MOVIE_REVIEW_DATA',
-      options: {
-        movieCode,
-        reviewPage: 1,
-        reviewCount: 1,
-        reviewSortType: 'recent',
-      },
-    }),
-    queryFn: () =>
-      queryMovieReviewData({
-        movieCode,
-        page: 1,
-        count: 1,
-        sortType: 'recent',
-      }),
-    enabled: Boolean(movieCode),
-  });
-
   if (!movieDetailData) return <></>;
 
   const { movie, trailer, poster, casting, specialScreen } = movieDetailData;
@@ -118,9 +97,7 @@ export default function MovieDetailPage() {
                   value: 'info',
                 },
                 {
-                  name: `평점 및 관람평${
-                    movieReviewData ? ` (${numberWithCommas(movieReviewData.totalCount)})` : ''
-                  }`,
+                  name: `평점 및 관람평(${numberWithCommas(movie.reviewCount)})`,
                   value: 'review',
                 },
               ]}

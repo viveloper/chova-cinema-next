@@ -49,6 +49,7 @@ export type MovieDetail = Movie & {
   agePrefer40: number;
   casting: Casting[];
   trailer: Trailer[];
+  reviewCount: number;
 };
 
 export type Casting = {
